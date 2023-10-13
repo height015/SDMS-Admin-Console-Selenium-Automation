@@ -68,13 +68,12 @@ public class Program
         {
             Utils.Sleep(1000);
             var table = new Tables(driver);
-            SelectElement dropdown = new SelectElement(table.dropDownCascadeSecor);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileForTableDataSector();
-            // Select by value
-            dropdown.SelectByIndex(retVal.TableDataSelector.OptionToSelect);
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            driver.WaitForElementToBeClickable(table.dropDownCascadeSecor, 10);
+            table.dropDownCascadeSecor.SelectDropDownByIndex(retVal.TableDataSelector.OptionToSelect);
             Utils.Sleep(2000);
+            driver.WaitForElementToBeClickable(table.dropDownCat, 10);
             table.dropDownCat.SelectDropDownByIndex(1);
             table.ClickContinue();
             Utils.Sleep(3000);
@@ -110,6 +109,7 @@ public class Program
             table.btnBrowseFile.SendKeys(filePath);
             table.btnUpload.Click();
             Utils.Sleep(3000);
+            driver.WaitForElementToBeClickable(table.btnClickOk, 10);
             table.btnClickOk.Click();
             Utils.Sleep(3000);
             var retVal = jsonFileReader.ReadJsonBulkTabe();
@@ -123,7 +123,7 @@ public class Program
                 rowCount = rows.Count();
                 for (int item = 1; item < rowCount; item++)
                 {
-                    IWebElement updateLink = table.rows[item].FindElement(By.LinkText("Update"));
+                    var updateLink = table.rows[item].FindElement(By.LinkText("Update"));
                     updateLink.Click();
                     Utils.Sleep(3000);
                     table.dropDownFeq.SelectDropDownByIndex(bulkTableNewDataList[item].FreqIndexToSelect);
@@ -135,7 +135,7 @@ public class Program
             }
             else if (applyAll)
             {
-                IWebElement updateLink = table.rows[1].FindElement(By.LinkText("Update"));
+                var updateLink = table.rows[1].FindElement(By.LinkText("Update"));
                 updateLink.Click();
                 Utils.Sleep(3000);
                 table.dropDownFeq.SelectDropDownByIndex(bulkTableNewDataList[1].FreqIndexToSelect);
@@ -151,10 +151,11 @@ public class Program
                 table.ClickOk();
             }
             Utils.Sleep(4000);
-            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            var js = (IJavaScriptExecutor)driver;
             js.ExecuteScript("window.scrollTo(0, 0);");
             table.ClickSave();
             Utils.Sleep(3000);
+            driver.WaitForElementToBeClickable(table.btnClickOk, 10);
             table.btnClickOk.Click();
             Utils.Sleep(3000);
         }

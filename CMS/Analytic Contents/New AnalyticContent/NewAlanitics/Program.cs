@@ -115,7 +115,6 @@ public class Program
         {
             var btnNewReq = driver.FindElement(By.CssSelector("a.item-button[href*='/shop/analytics/add-content?sectorId=-1']"));
             btnNewReq.Click();
-
             Utils.Sleep(2000);
             return true;
         }
@@ -130,19 +129,22 @@ public class Program
     {
         try
         {
-            var analytics = new Analytics(driver);
+
+    //         public IWebElement dropDownSector => _webDriver.FindElement(By.Id("DSectorId"));
+    //public IWebElement dropDownCategory => _webDriver.FindElement(By.Id("DCategoryId"));
+    //public IWebElement dropDownTable => _webDriver.FindElement(By.Id("DTableId"));
+
+
+    var analytics = new Analytics(driver);
             var jsonFileReader = new JsonFileReader();
             var retVal = jsonFileReader.ReadJsonCMSAnalytis();
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("DSectorId")));
+            driver.WaitForElementToBeClickable(analytics.dropDownSector, 10);
             analytics.dropDownSector.SelectDropDownByIndex(retVal.AnalyticsDataSector.SectorIndex);
             Utils.Sleep(1000);
-            var wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait2.Until(ExpectedConditions.ElementIsVisible(By.Id("DCategoryId")));
+            driver.WaitForElementToBeClickable(analytics.dropDownCategory, 10);
             analytics.dropDownCategory.SelectDropDownByIndex(retVal.AnalyticsDataSector.CategoryIndex);
             Utils.Sleep(1000);
-            var wait3 = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait3.Until(ExpectedConditions.ElementIsVisible(By.Id("DTableId")));
+            driver.WaitForElementToBeClickable(analytics.dropDownTable, 10);
             analytics.dropDownTable.SelectDropDownByIndex(retVal.AnalyticsDataSector.TableIndex);
             Utils.Sleep(4000);
             var indicatoros = analytics.table;
@@ -152,7 +154,6 @@ public class Program
                 var rowCounts = analytics.rows.Count();
                 var rows = analytics.rows;
                 var rowIndexes = retVal.AnalyticsDataSector.GetIndexArray();
-
                 rowCount = rows.Count();
                 foreach (var item in rowIndexes)
                 {
@@ -183,7 +184,6 @@ public class Program
             var perodTypeValz = analytics.readonlyInput;
             var dataVal = perodTypeValz.GetAttribute("data-value");
             var perodTypeVal = perodTypeValz.GetAttribute("value");
-
             switch (perodTypeVal)
             {
                 case "Daily":

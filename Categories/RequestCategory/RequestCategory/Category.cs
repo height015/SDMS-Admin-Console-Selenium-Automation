@@ -10,7 +10,6 @@ public class Category
     {
         _webDriver = webDriver;
     }
-
     public IWebElement catalogLink => _webDriver.FindElement(By.CssSelector("a[class='card'][href='/data-catalogs']"));
     public IWebElement dropDownBox => _webDriver.FindElement(By.Id("SectorId"));
     public IWebElement btnContinue => _webDriver.FindElement(By.Id("btnContinue"));

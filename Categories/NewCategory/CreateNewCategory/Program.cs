@@ -69,10 +69,9 @@ public class Program
             cartCard.Click();
             Utils.Sleep(5000);
             var catSec = new Category(driver);
-            SelectElement dropdown = new SelectElement(catSec.dropDownBox);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileForSelectOptionCatalogSelector();
-            dropdown.SelectByIndex(retVal.CatalogueSelector.OptionToSelect);
+            catSec.dropDownBox.SelectDropDownByIndex(retVal.CatalogueSelector.OptionToSelect);
             Utils.Sleep(3000);
             catSec.ClickContinue();
             Utils.Sleep(3000);

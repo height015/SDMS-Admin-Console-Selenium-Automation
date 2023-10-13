@@ -2,10 +2,10 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SuccessLogin;
+using SuccessLogin.Utils;
+
 
 namespace ReviewAuthorization;
-
-
 public class Program
 {
     public static void Main(string[] args)
@@ -13,19 +13,17 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
 
             if (login)
             {
                 ClickWorkFlow(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 ClickReviewAuthorization(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 CreateNewDataIndicatorPopUp(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 ClickClose(driver);
             }
         }
@@ -74,13 +72,11 @@ public class Program
         {
             var auth = new RevAuthorizationObj(driver);
 
-            Wait(2000);
+            Utils.Sleep(2000);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileWorkFlowSelection();
-            var dropdownCat = new SelectElement(auth.dropDownCat);
-            dropdownCat.SelectByIndex(retVal.WorkFlowSelection.CategoryIndex);
-            var sourceType = new SelectElement(auth.dropDownType);
-            sourceType.SelectByIndex(retVal.WorkFlowSelection.SourceTypeIndex);
+            auth.dropDownCat.SelectDropDownByIndex(retVal.WorkFlowSelection.CategoryIndex);
+            auth.dropDownType.SelectDropDownByIndex(retVal.WorkFlowSelection.SourceTypeIndex);
             var table = auth.tblResult;
             if (table != null)
             {
@@ -88,15 +84,13 @@ public class Program
                 var btnRow = retVal.WorkFlowSelection.RoleIndex;
                 if (btnRow > 0 && btnRow <= rows.Count)
                 {
-                    IWebElement desiredRow = rows[btnRow - 1];
-                    IWebElement actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
+                    var desiredRow = rows[btnRow - 1];
+                    var actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
                     actionsButton.Click();
-                    Wait(2000);
-
-                    IWebElement RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Review Item']"));
+                    Utils.Sleep(2000);
+                    var RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Review Item']"));
                     RevBoxPopUp.Click();
-                    Wait(3000);
-
+                    Utils.Sleep(3000);
                     var retCom = jsonFileReader.ReadJsonFileWorkFlowReview();
                     auth.EnterRevComment(retCom.ReviewSelection.Comment);
                     if (retCom.ReviewSelection.Status == true)
@@ -108,9 +102,9 @@ public class Program
                         auth.rdBtnDecline.Click();
 
                     }
-                    Wait(2000);
+                    Utils.Sleep(2000);
                     auth.ClickSubmit();
-                    Wait(3000);
+                    Utils.Sleep(3000);
                     auth.ClickOk();
                 }
             }
@@ -121,10 +115,5 @@ public class Program
         }
     }
     #endregion
-
-    private static void Wait(int time)
-    {
-        Thread.Sleep(time);
-    }
 
 }

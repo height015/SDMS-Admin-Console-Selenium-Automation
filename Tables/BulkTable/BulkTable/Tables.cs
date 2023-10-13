@@ -1,44 +1,17 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
-
 namespace BulkTable;
 
 public class Tables
 {
-
     private readonly IWebDriver _webDriver;
     public Tables(IWebDriver webDriver)
     {
         _webDriver = webDriver;
     }
-
-    public IWebElement dropDownCascadeSecor
-    {
-        get
-        {
-            var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            return wait.Until(ExpectedConditions.ElementIsVisible(By.Id("SectorId")));
-        }
-    }
-
-    public IWebElement dropDownCat
-    {
-        get
-        {
-            var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            return wait.Until(ExpectedConditions.ElementIsVisible(By.Id("CategoryId")));
-        }
-    }
-    public IWebElement btnContinue
-    {
-        get
-        {
-            var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            return wait.Until(ExpectedConditions.ElementIsVisible(By.Id("btnContinue")));
-        }
-    }
+    public virtual IWebElement dropDownCascadeSecor => _webDriver.FindElement(By.Id("SectorId"));
+    public virtual IWebElement dropDownCat => _webDriver.FindElement(By.Id("CategoryId"));
+    public virtual IWebElement btnContinue => _webDriver.FindElement(By.Id("btnContinue"));
     public virtual IWebElement Newlink => _webDriver.FindElement(By.CssSelector("a[href^='/dataset/tables/add']"));
     public virtual IWebElement txtBoxName => _webDriver.FindElement(By.Id("Name"));
     public virtual IWebElement txtBoxTitle => _webDriver.FindElement(By.Id("Title"));
@@ -58,37 +31,17 @@ public class Tables
     public IWebElement txtDataLab4 => _webDriver.FindElement(By.Id("DataLabel4"));
     public IWebElement txtDataLab5 => _webDriver.FindElement(By.Id("DataLabel5"));
     public IWebElement btnSubmit => _webDriver.FindElement(By.XPath("//input[@type='submit']"));
-    public IWebElement btnSave
-    {
-        get
-        {
-            var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            return wait.Until(ExpectedConditions.ElementIsVisible(By.Id("btnSave")));
-        }
-    }
+
+    public IWebElement btnSave => _webDriver.FindElement(By.Id("btnSave"));
     public IWebElement btnUpdate => _webDriver.FindElement(By.Id("btnUpdateLine"));
-    public IWebElement btnClose
-    {
-        get
-        {
-            var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            return wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("button.btn.btn-secondary[data-dismiss='modal']")));
-        }
-    }
-    public IWebElement btnClickOk
-    {
-        get
-        {
-            var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            return wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("button.confirm[style*='display: inline-block;'][style*='background-color: rgb(140, 212, 245);']")));
-        }
-    }
+
+    public IWebElement btnClose => _webDriver.FindElement(By.CssSelector("button.btn.btn-secondary[data-dismiss='modal']"));
+
+    public IWebElement btnClickOk => _webDriver.FindElement(By.CssSelector("button.confirm[style*='display: inline-block;'][style*='background-color: rgb(140, 212, 245);']"));
     public IWebElement txtTitle => _webDriver.FindElement(By.Id("txtTitle"));
     public IWebElement txtReason => _webDriver.FindElement(By.Id("txtReason"));
     public virtual IWebElement table => _webDriver.FindElement(By.ClassName("table")) ?? null;
     public virtual IWebElement btnApply => _webDriver.FindElement(By.PartialLinkText("Apply"));
-
-    // Get all the rows in the table
     public virtual List<IWebElement> rows => table.FindElements(By.TagName("tr")).ToList();
     public virtual void EnterTableInfoData(string name, string titile, string desc)
     {
@@ -96,7 +49,6 @@ public class Tables
         txtBoxTitle.SendKeys(titile);
         txtDescription.SendKeys(desc);
     }
-
     public void EnterRequestInfo(string title, string reason)
     {
         txtTitle.SendKeys(title);

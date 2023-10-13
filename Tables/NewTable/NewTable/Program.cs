@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
 using SuccessLogin.Utils;
 
@@ -11,17 +9,13 @@ namespace NewTable;
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
-
     public static void Main(string[] args)
     {
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
             if (login)
             {
                 #region Tables
@@ -68,13 +62,10 @@ public class Program
         {
             Utils.Sleep(1000);
             var table = new Tables(driver);
-            SelectElement dropdown = new SelectElement(table.dropDownCascadeSecor);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileForTableDataSector();
-            // Select by value
-            dropdown.SelectByIndex(retVal.TableDataSelector.OptionToSelect);
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            Utils.Sleep(2000);
+            table.dropDownCascadeSecor.SelectDropDownByIndex(retVal.TableDataSelector.OptionToSelect);
+            driver.WaitForElementToBeClickable(table.dropDownCat, 10);
             table.dropDownCat.SelectDropDownByIndex(1);
             table.ClickContinue();
             Utils.Sleep(3000);
@@ -91,17 +82,12 @@ public class Program
             Utils.Sleep(1000);
             var table = new Tables(driver);
             table.ClickNew();
-            //The Utils.Sleep is Inportant Here so the Pop-Div is loaded to the  DOM
             Utils.Sleep(4000);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileForNewDataTable();
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementIsVisible(By.Id("Name")));
-            // Select by value
+            driver.WaitForElementToBeClickable(table.txtBoxName, 10);
             table.EnterTableInfoData(retVal.TableNewData.Name, retVal.TableNewData.Title, retVal.TableNewData.Description);
             var dropFreq = jsonFileReader.ReadJsonFileForTableFrequency();
-            // Select by value
-
             table.dropDownFeq.SelectDropDownByIndex(dropFreq.TableFrequency.OptionToSelect);
             var dropUnit = jsonFileReader.ReadJsonFileForTableUnit();
             table.dropDownUnit.SelectDropDownByIndex(dropUnit.TableUnit.OptionToSelect);
@@ -139,7 +125,6 @@ public class Program
                     Utils.Sleep(3000);
                     ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", switBox);
                     ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", switBox);
-                    //table.Enable(switBox);
                     Utils.Sleep(2000);
                     textData2 = txtBoxVal.DataTableTxtVal.Txt2;
                     table.txtDataLab2.SendKeys(textData2);
@@ -190,7 +175,6 @@ public class Program
                     table.txtDataLab5.SendKeys(textData5);
                 }
             }
-
             Utils.Sleep(3000);
             table.ClickSubmit();
             Utils.Sleep(4000);

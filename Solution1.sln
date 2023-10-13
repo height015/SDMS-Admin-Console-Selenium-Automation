@@ -59,7 +59,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewTable", "Tables\NewTable
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRequest", "Tables\NewRequest\NewRequest\NewRequest.csproj", "{AC95403A-943F-47E3-9FB0-F0017E79DDF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulkTable", "Tables\BulkTable\BulkTable\BulkTable.csproj", "{1278B983-36E9-428E-9718-15829005CCE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkTable", "Tables\BulkTable\BulkTable\BulkTable.csproj", "{1278B983-36E9-428E-9718-15829005CCE8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dictionary", "Dictionary", "{E985E9FF-8937-403C-9114-E83C3DC57F24}"
 EndProject
@@ -75,33 +75,33 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "New DataEntity", "New DataE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "New Request", "New Request", "{06903949-ED16-498C-B441-B3CD589034BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewDataEntity", "Dictionary\Data Entities\New DataEntity\NewDataEntity\NewDataEntity.csproj", "{971A3F12-3A42-42EF-BA25-BD005182ACB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewDataEntity", "Dictionary\Data Entities\New DataEntity\NewDataEntity\NewDataEntity.csproj", "{971A3F12-3A42-42EF-BA25-BD005182ACB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRequest", "Dictionary\Data Entities\New Request\NewRequest\NewRequest.csproj", "{A43D6077-01B6-464F-BF53-6FB58C7E12B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRequest", "Dictionary\Data Entities\New Request\NewRequest\NewRequest.csproj", "{A43D6077-01B6-464F-BF53-6FB58C7E12B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "New Frequency", "New Frequency", "{79A8648B-A435-47A6-A9D9-61C1C79D6814}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "New Request", "New Request", "{475DE35B-A5E3-4079-992F-9FD46605D6E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewFrequency", "Dictionary\Frequency\New Frequency\NewFrequency\NewFrequency.csproj", "{78A8FC54-DB19-49E8-A16A-9E12246E5496}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewFrequency", "Dictionary\Frequency\New Frequency\NewFrequency\NewFrequency.csproj", "{78A8FC54-DB19-49E8-A16A-9E12246E5496}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRequest", "Dictionary\Frequency\New Request\NewRequest\NewRequest.csproj", "{BC68BDD9-0E29-461D-846D-1D6D43738ACF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRequest", "Dictionary\Frequency\New Request\NewRequest\NewRequest.csproj", "{BC68BDD9-0E29-461D-846D-1D6D43738ACF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewDataUnits", "NewDataUnits", "{D7281638-0405-498A-8AF1-A10F5E90CED7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewRequest", "NewRequest", "{26975C38-F62A-484A-ABA9-3D4BEE6992D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewUnit", "Dictionary\Units\NewDataUnits\NewUnit\NewUnit.csproj", "{0E9E0B7E-9FBE-46DE-ABF7-824F1203E203}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewUnit", "Dictionary\Units\NewDataUnits\NewUnit\NewUnit.csproj", "{0E9E0B7E-9FBE-46DE-ABF7-824F1203E203}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRequest", "Dictionary\Units\NewRequest\NewRequest\NewRequest.csproj", "{437908E4-A0C4-47DA-8622-484352992045}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRequest", "Dictionary\Units\NewRequest\NewRequest\NewRequest.csproj", "{437908E4-A0C4-47DA-8622-484352992045}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "New DataSources", "New DataSources", "{91D0C188-DE38-40E0-B2E5-81D89FEEC29D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "New Request", "New Request", "{8BEFB534-DBC0-4E26-ADA0-D4650DFA872D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewDataSource", "Dictionary\Data Sources\New DataSources\NewDataSource\NewDataSource.csproj", "{EEF6DEE1-7D9D-49BD-B058-54CF408AA15B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewDataSource", "Dictionary\Data Sources\New DataSources\NewDataSource\NewDataSource.csproj", "{EEF6DEE1-7D9D-49BD-B058-54CF408AA15B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewRequest", "Dictionary\Data Sources\New Request\NewRequest\NewRequest.csproj", "{BF6058D0-E9D1-4079-80E1-37C1EADD4B81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRequest", "Dictionary\Data Sources\New Request\NewRequest\NewRequest.csproj", "{BF6058D0-E9D1-4079-80E1-37C1EADD4B81}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMS", "CMS", "{2CB005B7-AFEF-40F7-93B2-6D64BAA99916}"
 EndProject
@@ -121,13 +121,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Quick Flashes", "Quick Flas
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "New QuickFlashes", "New QuickFlashes", "{7D01E8E0-B742-4755-B20A-B749B94360EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAlanitics", "CMS\Analytic Contents\New AnalyticContent\NewAlanitics\NewAlanitics.csproj", "{FA7206D5-08C8-40AF-84E2-AA3D9BF60121}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAlanitics", "CMS\Analytic Contents\New AnalyticContent\NewAlanitics\NewAlanitics.csproj", "{FA7206D5-08C8-40AF-84E2-AA3D9BF60121}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewFeaturedContent", "CMS\FeauturedContent\New FeauturedContent\NewFeaturedContent\NewFeaturedContent.csproj", "{79D946E6-D2A4-4926-97C0-9213C2206B76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewFeaturedContent", "CMS\FeauturedContent\New FeauturedContent\NewFeaturedContent\NewFeaturedContent.csproj", "{79D946E6-D2A4-4926-97C0-9213C2206B76}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewFlashCard", "CMS\Flash Cards\New FlashCard\NewFlashCard\NewFlashCard.csproj", "{4BEA5EF8-C517-471C-8466-DC4096FCCB94}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewFlashCard", "CMS\Flash Cards\New FlashCard\NewFlashCard\NewFlashCard.csproj", "{4BEA5EF8-C517-471C-8466-DC4096FCCB94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewQuickFlash", "CMS\Quick Flashes\New QuickFlashes\NewQuickFlash\NewQuickFlash.csproj", "{856C978B-DB36-48E9-915F-25ADB8AF59CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewQuickFlash", "CMS\Quick Flashes\New QuickFlashes\NewQuickFlash\NewQuickFlash.csproj", "{856C978B-DB36-48E9-915F-25ADB8AF59CF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WorkFlow", "WorkFlow", "{5226E6AC-BF11-4FF2-8294-DD799E3C5EC4}"
 EndProject
@@ -151,23 +151,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modification", "Modificatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Publication", "Publication", "{748FDA08-FFEB-43A0-8D3A-7BF0CE82AF15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthAuthorization", "WorkFlow\Review\Authorization\ReviewAuthorization\AuthAuthorization.csproj", "{46A762F6-629F-4D0A-B01C-8C8D94672197}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthAuthorization", "WorkFlow\Review\Authorization\ReviewAuthorization\AuthAuthorization.csproj", "{46A762F6-629F-4D0A-B01C-8C8D94672197}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevAuthorization", "WorkFlow\Authorize\Authorization\AuthAuthorization\RevAuthorization.csproj", "{49D0B2D7-C0FE-4FED-AC7D-A33AAE326E2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RevAuthorization", "WorkFlow\Authorize\Authorization\AuthAuthorization\RevAuthorization.csproj", "{49D0B2D7-C0FE-4FED-AC7D-A33AAE326E2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthArchive", "WorkFlow\Authorize\Archive\AuthArchive\AuthArchive.csproj", "{7B30D795-FE12-4FD3-9C41-74401C730135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthArchive", "WorkFlow\Authorize\Archive\AuthArchive\AuthArchive.csproj", "{7B30D795-FE12-4FD3-9C41-74401C730135}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Publications", "Publications", "{0CCF92B7-0415-434A-AAE5-8B3BCDDE39DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevAchive", "WorkFlow\Review\Archive\RevAchive\RevAchive.csproj", "{3032210F-302A-4A71-84D4-DDCB9B15443F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RevAchive", "WorkFlow\Review\Archive\RevAchive\RevAchive.csproj", "{3032210F-302A-4A71-84D4-DDCB9B15443F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevModification", "WorkFlow\Review\Modification\RevModification\RevModification.csproj", "{5F198116-845F-48CD-B260-B7F92CC09033}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RevModification", "WorkFlow\Review\Modification\RevModification\RevModification.csproj", "{5F198116-845F-48CD-B260-B7F92CC09033}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevPublication", "WorkFlow\Review\Publication\RevPublication\RevPublication.csproj", "{0009D6C8-C6A2-472F-A2D6-66095EAABB72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RevPublication", "WorkFlow\Review\Publication\RevPublication\RevPublication.csproj", "{0009D6C8-C6A2-472F-A2D6-66095EAABB72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthModification", "WorkFlow\Authorize\Modification\AuthModification\AuthModification.csproj", "{0C764EFD-1E2C-4CDC-8316-20DF4ACF9343}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthModification", "WorkFlow\Authorize\Modification\AuthModification\AuthModification.csproj", "{0C764EFD-1E2C-4CDC-8316-20DF4ACF9343}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthPublication", "WorkFlow\Authorize\Publication\AuthPublication\AuthPublication.csproj", "{B274BB61-83AF-48F5-8FA1-014867800CEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthPublication", "WorkFlow\Authorize\Publication\AuthPublication\AuthPublication.csproj", "{B274BB61-83AF-48F5-8FA1-014867800CEA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XUnitTest", "XUnitTest", "{D7A0E5C0-4286-4D95-9C59-E59F3D31945F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthenticationTest", "AuthenticationTest", "{871ECC8C-683E-4C8C-8D85-EE3264457384}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationTest", "XUnitTest\AuthenticationTest\AuthenticationTest\AuthenticationTest.csproj", "{655DB2E2-ED7F-413D-9658-32923AD7B846}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -303,6 +309,10 @@ Global
 		{B274BB61-83AF-48F5-8FA1-014867800CEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B274BB61-83AF-48F5-8FA1-014867800CEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B274BB61-83AF-48F5-8FA1-014867800CEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{655DB2E2-ED7F-413D-9658-32923AD7B846}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{655DB2E2-ED7F-413D-9658-32923AD7B846}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{655DB2E2-ED7F-413D-9658-32923AD7B846}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{655DB2E2-ED7F-413D-9658-32923AD7B846}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -383,6 +393,8 @@ Global
 		{0009D6C8-C6A2-472F-A2D6-66095EAABB72} = {73629EF4-102E-45BC-B5EB-82A20FE43F86}
 		{0C764EFD-1E2C-4CDC-8316-20DF4ACF9343} = {1DA69265-D845-41C2-B06D-17400CB643BA}
 		{B274BB61-83AF-48F5-8FA1-014867800CEA} = {748FDA08-FFEB-43A0-8D3A-7BF0CE82AF15}
+		{871ECC8C-683E-4C8C-8D85-EE3264457384} = {D7A0E5C0-4286-4D95-9C59-E59F3D31945F}
+		{655DB2E2-ED7F-413D-9658-32923AD7B846} = {871ECC8C-683E-4C8C-8D85-EE3264457384}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D46B67E9-3E39-4E9B-9522-6AC55C28A10C}

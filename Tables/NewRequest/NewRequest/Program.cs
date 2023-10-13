@@ -27,12 +27,6 @@ public class Program
                 data.ClickDataSet(driver);
                 ClickTableCard(driver);
                 TableCatalogueSelectorPopUp(driver);
-
-                //Utils.Sleep(3000);
-                //ClickTableBulk(driver);
-                //Utils.Sleep(3000);
-                //TableUploadBulkFile(driver);
-                //Utils.Sleep(3000);
                 ClickRequestType(driver);
                 Utils.Sleep(3000);
                 TableCreateNewReqPopUp(driver);
@@ -54,6 +48,7 @@ public class Program
             return false;
         }
     }
+    
     #region Tables
     public static void ClickTableCard(IWebDriver driver)
     {
@@ -74,11 +69,11 @@ public class Program
         {
             Utils.Sleep(1000);
             var table = new Tables(driver);
-            SelectElement dropdown = new SelectElement(table.dropDownCascadeSecor);
+            driver.WaitForElementToBeClickable(table.dropDownCascadeSecor, 10);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileForTableDataSector();
-            dropdown.SelectByIndex(retVal.TableDataSelector.OptionToSelect);
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            table.dropDownCascadeSecor.SelectDropDownByIndex(retVal.TableDataSelector.OptionToSelect);
+            driver.WaitForElementToBeClickable(table.dropDownCascadeSecor, 10);
             Utils.Sleep(2000);
             table.dropDownCat.SelectDropDownByIndex(1);
             table.ClickContinue();
@@ -132,8 +127,7 @@ public class Program
                 btn.Click();
             }
             Utils.Sleep(2000);
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName("table")));
+            driver.WaitForElementToBeClickable(createSec.table, 10);
             var table = createSec.table;
             var rowCount = 0;
             if (table != null)
@@ -170,16 +164,14 @@ public class Program
             var table = new Tables(driver);
             var RequestInforVal = jsonFileReader.ReadJsonFileForNewRequestTable();
             Utils.Sleep(3000);
-            IWebElement overlappingDiv = driver.FindElement(By.CssSelector(".col-7.text-right"));
+            var overlappingDiv = driver.FindElement(By.CssSelector(".col-7.text-right"));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.display='none';", overlappingDiv);
-            IWebElement button = driver.FindElement(By.Id("btnReqSelect"));
-            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
+            var js = (IJavaScriptExecutor)driver;
             js.ExecuteScript("window.scrollTo(0, 0);");
             Utils.Sleep(3000);
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            var dataSetLink = wait.Until(d => d.FindElement(By.Id("btnReqSelect")));
+            var btn = driver.WaitForElementToBeClickable(driver.FindElement(By.Id("btnReqSelect")), 10);
             Utils.Sleep(4000);
-            button.Click();
+            btn.Click();
             Utils.Sleep(3000);
             table.EnterRequestInfo(RequestInforVal.TableRequestData.Title, RequestInforVal.TableRequestData.Reason);
             Utils.Sleep(2000);

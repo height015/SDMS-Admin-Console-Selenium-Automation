@@ -12,7 +12,6 @@ public class RevAuthorizationObj
         _webDriver = webDriver;
 
     }
-
     public IWebElement dropDownCat => _webDriver.FindElement(By.Id("ItemCategory"));
     public IWebElement dropDownType => _webDriver.FindElement(By.Id("ItemType"));
 
@@ -21,11 +20,6 @@ public class RevAuthorizationObj
     public IWebElement tblResult => _webDriver.FindElement(By.CssSelector("table.table-hover")) ?? null;
 
     public IList<IWebElement> rows => tblResult.FindElements(By.CssSelector("tbody tr"));
-
-
-    //IList<IWebElement> rows = table.FindElements(By.CssSelector("tbody tr"));
-
-    //int numberOfRows = rows.Count;
 
     public IWebElement btnReqInfo => _webDriver.FindElement(By.XPath("//button[contains(text(), 'Request Information')]"));
     public IWebElement btnRevInfo => _webDriver.FindElement(By.CssSelector("a[title='Review Item']"));
@@ -54,6 +48,4 @@ public class RevAuthorizationObj
     {
         btnClickOk.Clicks();
     }
-
-
 }

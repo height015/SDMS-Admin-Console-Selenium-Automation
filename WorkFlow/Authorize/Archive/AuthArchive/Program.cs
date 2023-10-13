@@ -73,10 +73,8 @@ public class Program
             Utils.Sleep(2000);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileWorkFlowSelection();
-            var dropdownCat = new SelectElement(auth.dropDownCat);
-            dropdownCat.SelectByIndex(retVal.WorkFlowSelection.CategoryIndex);
-            var sourceType = new SelectElement(auth.dropDownType);
-            sourceType.SelectByIndex(retVal.WorkFlowSelection.SourceTypeIndex);
+            auth.dropDownCat.SelectDropDownByIndex(retVal.WorkFlowSelection.CategoryIndex);
+            auth.dropDownType.SelectDropDownByIndex(retVal.WorkFlowSelection.SourceTypeIndex);
             var table = auth.tblResult;
             if (table != null)
             {
@@ -84,11 +82,11 @@ public class Program
                 var btnRow = retVal.WorkFlowSelection.RoleIndex;
                 if (btnRow > 0 && btnRow <= rows.Count)
                 {
-                    IWebElement desiredRow = rows[btnRow - 1];
-                    IWebElement actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
+                    var desiredRow = rows[btnRow - 1];
+                    var actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
                     actionsButton.Click();
                     Utils.Sleep(2000);
-                    IWebElement RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Review Item']"));
+                    var RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Review Item']"));
                     RevBoxPopUp.Click();
                     Utils.Sleep(3000);
                     var retCom = jsonFileReader.ReadJsonFileWorkFlowReview();

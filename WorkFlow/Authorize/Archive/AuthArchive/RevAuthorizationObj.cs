@@ -17,7 +17,6 @@ public class RevAuthorizationObj
     public IList<IWebElement> rows => tblResult.FindElements(By.CssSelector("tbody tr"));
     public IWebElement btnReqInfo => _webDriver.FindElement(By.XPath("//button[contains(text(), 'Request Information')]"));
     public IWebElement btnRevInfo => _webDriver.FindElement(By.CssSelector("a[title='Review Item']"));
-
     public IWebElement txtRevComment => _webDriver.FindElement(By.Id("txtComment"));
     public IWebElement rdBtnApprove => _webDriver.FindElement(By.CssSelector("input[type='radio'][value='1'][name='rbAuthStatus']"));
     public IWebElement rdBtnDecline => _webDriver.FindElement(By.CssSelector("input[type='radio'][value='-1'][name='rbAuthStatus']"));
@@ -28,7 +27,6 @@ public class RevAuthorizationObj
     {
         txtRevComment.SendKeys(comment);
     }
-
     public void ClickSubmit()
     {
         btnSubmit.Clicks();

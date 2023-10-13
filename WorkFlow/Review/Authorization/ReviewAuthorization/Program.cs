@@ -83,11 +83,11 @@ public class Program
                 var btnRow = retVal.WorkFlowSelection.RoleIndex;
                 if (btnRow >= 0 && btnRow < rows.Count)
                 {
-                    IWebElement desiredRow = rows[btnRow - 1];
-                    IWebElement actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
+                    var desiredRow = rows[btnRow - 1];
+                    var actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
                     actionsButton.Click();
                     Utils.Sleep(2000);
-                    IWebElement RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Approve Item']"));
+                    var RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Approve Item']"));
                     RevBoxPopUp.Click();
                     Utils.Sleep(3000);
                     var retCom = jsonFileReader.ReadJsonFileWorkFlowReview();
