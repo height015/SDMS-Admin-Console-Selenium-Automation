@@ -3,6 +3,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SuccessLogin;
+using SuccessLogin.Utils;
+
 
 namespace IndicatorBulkUpload;
 
@@ -17,34 +19,22 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
             if (login)
             {
-
                 //Indicator
                 data.ClickDataSet(driver);
-                Sleep(3000);
-
+                Utils.Sleep(3000);
                 ClickIndicators(driver);
-                Sleep(3000);
-
+                Utils.Sleep(3000);
                 IndicatorCataloguePopUp(driver);
-                Sleep(3000);
-
+                Utils.Sleep(3000);
                 ClickIndicatorBulk(driver);
-                Sleep(3000);
-
+                Utils.Sleep(3000);
                 IndicatorUploadBulkFile(driver);
             }
-
-
-
         }
-
     }
 
     public bool ClickDataSet(IWebDriver driver)
@@ -92,28 +82,21 @@ public class Program
         try
         {
             var inidi = new Indicator(driver);
-
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonFileDataIndicator();
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             //Access the Sector
             SelectElement dropdownSec = new SelectElement(inidi.dropDownCascadeSecor);
             dropdownSec.SelectByIndex(retVal.IndicatorDataSelector.SectorIndex);
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             //Access the Category
             SelectElement dropdownCat = new SelectElement(inidi.dropDownCat);
             dropdownCat.SelectByIndex(retVal.IndicatorDataSelector.CategoryIndex);
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             //Access the Category
             SelectElement dropdownTab = new SelectElement(inidi.dropDownTable);
             dropdownTab.SelectByIndex(retVal.IndicatorDataSelector.TableIndex);
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             inidi.ClickContinue();
         }
         catch (Exception ex)
@@ -126,10 +109,8 @@ public class Program
         try
         {
             var tableBulk = driver.FindElement(By.LinkText("Bulk"));
-
             tableBulk.Click();
-
-            Sleep(3000);
+            Utils.Sleep(3000);
         }
         catch (Exception ex)
         {
@@ -139,36 +120,21 @@ public class Program
     public static void IndicatorUploadBulkFile(IWebDriver driver)
     {
         var indi = new Indicator(driver);
-
         try
         {
             JsonFileReader jsonFileReader = new();
-
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
             string fileName = "Indicator_Today.xlsx";
-
             string filePath = Path.Combine(desktopPath, fileName);
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             indi.btnBrowseFile.SendKeys(filePath);
-
-
             indi.btnUpload.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             indi.btnClickOk.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var retVal = jsonFileReader.ReadJsonBulkIndicator();
             bool modify = retVal.BulkIndicatorNewDataCon.Modify;
-
-
             var bulkTableNewDataList = retVal.BulkIndicatorNewDataCon.BulkIndicatorNewData;
-
             var tableRes = indi.table;
             var rowCount = 0;
             if (modify)
@@ -177,50 +143,34 @@ public class Program
                 {
                     var rows = indi.rows;
                     rowCount = rows.Count();
-
                     for (int item = 1; item < rowCount; item++)
                     {
-
                         IWebElement updateLink = indi.rows[item].FindElement(By.LinkText("Modify"));
-
                         updateLink.Click();
-                        Sleep(3000);
-
+                        Utils.Sleep(3000);
                         indi.displayOrder.SendKeys(bulkTableNewDataList[item].DisplayOrder.ToString());
-
                         if (bulkTableNewDataList[item].DisplayInChart == true)
                         {
-
-                            Sleep(3000);
+                            Utils.Sleep(3000);
                             var switBox = indi.DisplayInChart;
                             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", switBox);
                             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].click();", switBox);
-                            Sleep(2000);
+                            Utils.Sleep(2000);
                             indi.txtGrapTit.SendKeys(bulkTableNewDataList[item].GraphTitle);
                         }
-
-
-                        Sleep(2000);
-
+                        Utils.Sleep(2000);
                         indi.ClickOk();
-
                     }
-
                 }
-
             }
             if (indi.txtTopLevelBox != null)
             {
                 indi.txtTopLevelBox.Click();
                 int indexToSelect = retVal.BulkIndicatorNewDataCon.indexToSelect;
-                Sleep(3000);
+                Utils.Sleep(3000);
                 indi.boxSel[indexToSelect].Click();
-
             }
-
-            Sleep(3000);
-
-
+            Utils.Sleep(3000);
         }
         catch (Exception ex)
         {
@@ -228,20 +178,12 @@ public class Program
         }
         finally
         {
-            Sleep(3000);
+            Utils.Sleep(3000);
             indi.btnSave.Click();
-            Sleep(3000);
+            Utils.Sleep(3000);
             indi.btnClickOk.Click();
-            Sleep(9000);
-
+            Utils.Sleep(9000);
         }
     }
     #endregion
-
-    private static void Sleep(int time)
-    {
-        Thread.Sleep(time);
-    }
-
-
 }

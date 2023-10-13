@@ -4,6 +4,8 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
+using SuccessLogin.Utils;
+
 
 namespace NewFlashCard;
 
@@ -18,40 +20,28 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
-
             if (login)
             {
-
-
-                //Flash Card
                 #region FlashCard Operations
                 ClickCMS(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickFlashCard(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickNewFcard(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 PopUpDataSet(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ProcessFlashCardDataSetSelector(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 PopUpTimePeriod(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ProcessTimePeriodFlashCardSelector(driver);
                 #endregion
             }
-
-
         }
-
     }
-
-
     public static void ClickCMS(IWebDriver driver)
     {
         try
@@ -71,7 +61,7 @@ public class Program
         {
             var btnClear = driver.FindElement(By.LinkText("Clear"));
             btnClear.Click();
-            Sleep(2000);
+            Utils.Sleep(2000);
             return true;
         }
         catch (Exception ex)
@@ -109,11 +99,7 @@ public class Program
         }
     }
 
-
     #region Flash Cards
-
-
-
     public static void ClickFlashCard(IWebDriver driver)
     {
         try
@@ -132,8 +118,7 @@ public class Program
         {
             var btnNewReq = driver.FindElement(By.CssSelector("a.item-button[href*='/shop/f-cards/add-content?sectorId=-1']"));
             btnNewReq.Click();
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             return true;
         }
         catch (Exception ex)
@@ -148,18 +133,14 @@ public class Program
         try
         {
             var flashcard = new FlashCards(driver);
-
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonCMSFlashCard();
-
-            flashcard.dropDownSector.SelectDropDown(retVal.FlashCardDataSector.SectorIndex);
-            Sleep(1000);
-            flashcard.dropDownCategory.SelectDropDown(retVal.FlashCardDataSector.CategoryIndex);
-            Sleep(1000);
-            flashcard.dropDownTable.SelectDropDown(retVal.FlashCardDataSector.TableIndex);
-
-            Sleep(4000);
+            flashcard.dropDownSector.SelectDropDownByIndex(retVal.FlashCardDataSector.SectorIndex);
+            Utils.Sleep(1000);
+            flashcard.dropDownCategory.SelectDropDownByIndex(retVal.FlashCardDataSector.CategoryIndex);
+            Utils.Sleep(1000);
+            flashcard.dropDownTable.SelectDropDownByIndex(retVal.FlashCardDataSector.TableIndex);
+            Utils.Sleep(4000);
             var indicatoros = flashcard.table;
             var rowCount = 0;
             if (indicatoros != null)
@@ -172,7 +153,6 @@ public class Program
 
                 foreach (var item in rowIndexes)
                 {
-
                     IWebElement checkbox = flashcard.rows[item].FindElement(By.Name("SelIndiIds"));
                     checkbox.Click();
                     rowCount--;
@@ -180,17 +160,11 @@ public class Program
                     {
                         break;
                     }
-
                 }
             }
 
-            Sleep(3000);
-
-
-
+            Utils.Sleep(3000);
             flashcard.ClickContinue();
-
-
         }
         catch (Exception ex)
         {
@@ -202,17 +176,11 @@ public class Program
         try
         {
             var analytics = new FlashCards(driver);
-
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonCMSFlashCard();
-
             var perodTypeValz = analytics.readonlyInput;
             var dataVal = perodTypeValz.GetAttribute("data-value");
             var perodTypeVal = perodTypeValz.GetAttribute("value");
-
-
-
             switch (perodTypeVal)
             {
                 case "Daily":
@@ -220,24 +188,18 @@ public class Program
                 case "Weekly":
                     int startYear = int.Parse(retVal.FlashCardDataSector.StartDate);
                     int stopYear = int.Parse(retVal.FlashCardDataSector.StopDate);
-
                     var startyr = driver.FindElement(By.Id("txtWeekStartPeriod"));
                     var stopyr = driver.FindElement(By.Id("txtWeekStopPeriod"));
-
                     DateTime startOfYear = new DateTime(startYear, 1, 1);
                     string formattedstartOfYear = startOfYear.ToString("yyyy-'W'ww", CultureInfo.InvariantCulture);
-
                     DateTime endOfYear = new DateTime(stopYear, 12, 31);
                     string formattedendOfYear = startOfYear.ToString("yyyy-'W'ww", CultureInfo.InvariantCulture);
-
                     startyr.Clear();
                     stopyr.Clear();
                     startyr.SendKeys(formattedstartOfYear);
                     perodTypeValz.Click();
                     stopyr.SendKeys(formattedendOfYear);
                     perodTypeValz.Click();
-
-
                     break;
                 case "Monthly":
                     break;
@@ -260,26 +222,15 @@ public class Program
                 default:
                     break;
             }
-
-            Sleep(4000);
-
-
+            Utils.Sleep(4000);
             analytics.btnContinueSelection.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var dataSetLink = driver.FindElement(By.LinkText("Content"));
             dataSetLink.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             ProcessFlashCardContent(driver);
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             analytics.ClickOk();
-
-
         }
         catch (Exception ex)
         {
@@ -291,39 +242,28 @@ public class Program
         try
         {
             var analytics = new FlashCards(driver);
-
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonCMSFlashCard();
-
-
             var name = retVal.FlashCardDataSector?.Name;
             var title = retVal.FlashCardDataSector?.Title;
             var titleSeries = retVal.FlashCardDataSector?.SeriesTitle;
             var chatType = retVal.FlashCardDataSector.ChartTypeIndex;
             var contentType = retVal.FlashCardDataSector.ContentSpotIndex;
             var Note = retVal.FlashCardDataSector?.Note;
-
             analytics.txtBoxName.SendKeys(name);
             analytics.txtBoxTitle.SendKeys(title);
             analytics.txtBoxSeries.SendKeys(titleSeries);
-            analytics.dropDwnSeriesType.SelectDropDown(chatType);
-            analytics.dropDwnContentSpot.SelectDropDown(contentType);
+            analytics.dropDwnSeriesType.SelectDropDownByIndex(chatType);
+            analytics.dropDwnContentSpot.SelectDropDownByIndex(contentType);
             analytics.txtNote.SendKeys(Note);
-
             analytics.btnSaveConten.Click();
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             analytics.btnSaves.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             var dataSetLink = wait.Until(d => analytics.btnYes);
-
             dataSetLink.Click();
-            Sleep(3000);
-
+            Utils.Sleep(3000);
         }
         catch (Exception ex)
         {
@@ -332,11 +272,5 @@ public class Program
 
     }
     #endregion
-
-
-    private static void Sleep(int timeVal)
-    {
-        Thread.Sleep(timeVal);
-    }
 
 }

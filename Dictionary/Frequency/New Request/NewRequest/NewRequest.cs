@@ -26,7 +26,6 @@ public class NewRequest
         txtTitle.SendKeys(title);
         txtReason.SendKeys(reason);
     }
-
     public void ClickNew()
     {
         Newlink.Clicks();
@@ -40,13 +39,10 @@ public class NewRequest
     {
         btnSubmit.Clicks();
     }
-
-
     public void ClickSave()
     {
         btnSave.Clicks();
     }
-
     public void ClickOk()
     {
         btnClickOk.Clicks();

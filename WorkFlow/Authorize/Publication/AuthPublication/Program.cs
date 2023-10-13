@@ -1,8 +1,8 @@
-﻿using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
+﻿using AuthPublish;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using SuccessLogin;
-using AuthPublish;
 
 namespace AuthPublication;
 

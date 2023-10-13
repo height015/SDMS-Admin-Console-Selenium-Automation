@@ -1,8 +1,10 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
 using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
+using SuccessLogin.Utils;
+
 
 namespace AddNewSector;
 
@@ -17,29 +19,21 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
             if (login)
             {
                 #region Sector
-                Sleep(3000);
+                Utils.Sleep(3000);
                 data.ClickDataSet(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 data.ClickSector(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 data.CreateNewDataSectorSuccess(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 #endregion
-
             }
-
-
-
         }
-
     }
 
     public bool ClickDataSet(IWebDriver driver)
@@ -63,9 +57,7 @@ public class Program
         try
         {
             var dataSetLinkSec = driver.FindElement(By.LinkText("Sectors"));
-
             dataSetLinkSec.Click();
-
             return true;
         }
         catch (Exception ex)
@@ -79,32 +71,19 @@ public class Program
         try
         {
             JsonFileReader jsonFileReader = new();
-
             var loginVal = jsonFileReader.ReadJsonFileCreateSector();
-
-            var createSec =  new Sector(driver);
-
-
+            var createSec = new Sector(driver);
             createSec.ClickNew();
-
-            Sleep(2000);
-
+            Utils.Sleep(2000);
             createSec.EnterNameAndTitle(loginVal.SectorField.Name, loginVal.SectorField.Title);
-
             createSec.ClickSubmit();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var teaxVal = createSec.textMsgRes.Text;
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By
                 .CssSelector("button.confirm[style*='display: inline-block;'][style*='background-color: rgb(140, 212, 245);']")));
-
             createSec.ClickOk();
-
             return teaxVal;
         }
 
@@ -115,11 +94,4 @@ public class Program
         }
     }
     #endregion
-
-    private static void Sleep(int time)
-    {
-        Thread.Sleep(time);
-    }
-
-
 }

@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
+using SuccessLogin.Utils;
 namespace NewFeaturedContent;
 
 public class Program
@@ -25,35 +26,28 @@ public class Program
 
             if (login)
             {
-
-
-
                 //FeaturedContent
                 #region FeaturedContent Operations
                 ClickCMS(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickFeaturedContentCard(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickNewFContentCard(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 PopUpDataSet(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ProcessFContentDataSetSelector(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 PopUpTimePeriod(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ProcessTimePeriodFContentSelector(driver);
                 #endregion
-
-
             }
 
 
         }
 
     }
-
-
     public static void ClickCMS(IWebDriver driver)
     {
         try
@@ -66,14 +60,13 @@ public class Program
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
     }
-
     public static bool ClickClear(IWebDriver driver)
     {
         try
         {
             var btnClear = driver.FindElement(By.LinkText("Clear"));
             btnClear.Click();
-            Sleep(2000);
+            Utils.Sleep(2000);
             return true;
         }
         catch (Exception ex)
@@ -111,11 +104,7 @@ public class Program
         }
     }
 
-
-
-
     #region FeaturedContent
-
     public static void ClickFeaturedContentCard(IWebDriver driver)
     {
         try
@@ -134,8 +123,7 @@ public class Program
         {
             var btnNewReq = driver.FindElement(By.CssSelector("a.item-button[href*='/shop/f-contents/add-content?sectorId=-1']"));
             btnNewReq.Click();
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             return true;
         }
         catch (Exception ex)
@@ -149,18 +137,14 @@ public class Program
         try
         {
             var Fcontent = new FeaturedContents(driver);
-
             var jsonFileReader = new JsonFileReader();
-
             var retVal = jsonFileReader.ReadJsonCMSFeaturedContent();
-
-            Fcontent.dropDownSector.SelectDropDown(retVal.FeaturedContentDataSector.SectorIndex);
-            Sleep(1000);
-            Fcontent.dropDownCategory.SelectDropDown(retVal.FeaturedContentDataSector.CategoryIndex);
-            Sleep(1000);
-            Fcontent.dropDownTable.SelectDropDown(retVal.FeaturedContentDataSector.TableIndex);
-
-            Sleep(4000);
+            Fcontent.dropDownSector.SelectDropDownByIndex(retVal.FeaturedContentDataSector.SectorIndex);
+            Utils.Sleep(1000);
+            Fcontent.dropDownCategory.SelectDropDownByIndex(retVal.FeaturedContentDataSector.CategoryIndex);
+            Utils.Sleep(1000);
+            Fcontent.dropDownTable.SelectDropDownByIndex(retVal.FeaturedContentDataSector.TableIndex);
+            Utils.Sleep(4000);
             var indicatoros = Fcontent.table;
             var rowCount = 0;
             if (indicatoros != null)
@@ -168,12 +152,9 @@ public class Program
                 var rowCounts = Fcontent.rows.Count();
                 var rows = Fcontent.rows;
                 var rowIndexes = retVal.FeaturedContentDataSector.GetIndexArray();
-
                 rowCount = rows.Count();
-
                 foreach (var item in rowIndexes)
                 {
-
                     IWebElement checkbox = Fcontent.rows[item].FindElement(By.Name("SelIndiIds"));
                     checkbox.Click();
                     rowCount--;
@@ -181,14 +162,10 @@ public class Program
                     {
                         break;
                     }
-
                 }
             }
 
-            Sleep(3000);
-
-
-
+            Utils.Sleep(3000);
             Fcontent.ClickContinue();
 
 
@@ -203,17 +180,11 @@ public class Program
         try
         {
             var Fcontent = new FeaturedContents(driver);
-
             var jsonFileReader = new JsonFileReader();
-
             var retVal = jsonFileReader.ReadJsonCMSFeaturedContent();
-
             var perodTypeValz = Fcontent.readonlyInput;
             var dataVal = perodTypeValz.GetAttribute("data-value");
             var perodTypeVal = perodTypeValz.GetAttribute("value");
-
-
-
             switch (perodTypeVal)
             {
                 case "Daily":
@@ -221,24 +192,18 @@ public class Program
                 case "Weekly":
                     int startYear = int.Parse(retVal.FeaturedContentDataSector.StartDate);
                     int stopYear = int.Parse(retVal.FeaturedContentDataSector.StopDate);
-
                     var startyr = driver.FindElement(By.Id("txtWeekStartPeriod"));
                     var stopyr = driver.FindElement(By.Id("txtWeekStopPeriod"));
-
                     DateTime startOfYear = new DateTime(startYear, 1, 1);
                     string formattedstartOfYear = startOfYear.ToString("yyyy-'W'ww", CultureInfo.InvariantCulture);
-
                     DateTime endOfYear = new DateTime(stopYear, 12, 31);
                     string formattedendOfYear = startOfYear.ToString("yyyy-'W'ww", CultureInfo.InvariantCulture);
-
                     startyr.Clear();
                     stopyr.Clear();
                     startyr.SendKeys(formattedstartOfYear);
                     perodTypeValz.Click();
                     stopyr.SendKeys(formattedendOfYear);
                     perodTypeValz.Click();
-
-
                     break;
                 case "Monthly":
                     break;
@@ -262,23 +227,15 @@ public class Program
                     break;
             }
 
-            Sleep(4000);
-
+            Utils.Sleep(4000);
             Fcontent.btnContinueSelection.Click();
-
-            Sleep(3000);
+            Utils.Sleep(3000);
             var dataSetLink = driver.FindElement(By.LinkText("Content"));
             dataSetLink.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             ProcessFContent(driver);
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             Fcontent.ClickOk();
-
-
         }
         catch (Exception ex)
         {
@@ -291,39 +248,28 @@ public class Program
         try
         {
             var Fcontent = new FeaturedContents(driver);
-
             var jsonFileReader = new JsonFileReader();
-
             var retVal = jsonFileReader.ReadJsonCMSFeaturedContent();
-
-
             var name = retVal.FeaturedContentDataSector?.Name;
             var title = retVal.FeaturedContentDataSector?.Title;
             var titleSeries = retVal.FeaturedContentDataSector?.SeriesTitle;
             var chatType = retVal.FeaturedContentDataSector.ChartTypeIndex;
             var contentType = retVal.FeaturedContentDataSector.ContentSpotIndex;
             var Note = retVal.FeaturedContentDataSector?.Note;
-
             Fcontent.txtBoxName.SendKeys(name);
             Fcontent.txtBoxTitle.SendKeys(title);
             Fcontent.txtBoxSeries.SendKeys(titleSeries);
-            Fcontent.dropDwnSeriesType.SelectDropDown(chatType);
-            Fcontent.dropDwnContentSpot.SelectDropDown(contentType);
+            Fcontent.dropDwnSeriesType.SelectDropDownByIndex(chatType);
+            Fcontent.dropDwnContentSpot.SelectDropDownByIndex(contentType);
             Fcontent.txtNote.SendKeys(Note);
-
             Fcontent.btnSaveConten.Click();
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             Fcontent.btnSaves.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             var dataSetLink = wait.Until(d => Fcontent.btnYes);
-
             dataSetLink.Click();
-            Sleep(3000);
-
+            Utils.Sleep(3000);
         }
         catch (Exception ex)
         {
@@ -332,11 +278,4 @@ public class Program
 
     }
     #endregion
-
-
-    private static void Sleep(int timeVal)
-    {
-        Thread.Sleep(timeVal);
-    }
-
 }

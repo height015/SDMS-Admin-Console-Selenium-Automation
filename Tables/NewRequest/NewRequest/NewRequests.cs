@@ -1,8 +1,8 @@
 ﻿
-using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium;
-using SuccessLogin;
+using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using SuccessLogin;
 
 namespace NewRequestTable;
 
@@ -10,11 +10,9 @@ public class NewRequests
 {
     private readonly IWebDriver _webDriver;
 
-
     public NewRequests(IWebDriver webDriver)
     {
         _webDriver = webDriver;
-
     }
     public IWebElement txtTitle => _webDriver.FindElement(By.Id("txtTitle"));
     public IWebElement txtReson => _webDriver.FindElement(By.Id("txtReason"));

@@ -1,8 +1,8 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using SuccessLogin;
 using ReviewPublication;
+using SuccessLogin;
 
 namespace RevPublication;
 

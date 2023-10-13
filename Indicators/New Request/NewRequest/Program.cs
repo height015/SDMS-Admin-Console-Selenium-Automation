@@ -1,17 +1,17 @@
-﻿using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
+﻿using NewRequestIndicator;
 using OpenQA.Selenium;
-using SuccessLogin;
-using NewRequestIndicator;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
+using SuccessLogin;
+using SuccessLogin.Utils;
+
 
 namespace NewRequest;
-
 
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
-
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
     public static void Main(string[] args)
@@ -19,39 +19,27 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
             if (login)
             {
-
                 //Indicator
                 data.ClickDataSet(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickIndicators(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 IndicatorCataloguePopUp(driver);
-                Sleep(3000);
-
+                Utils.Sleep(3000);
                 ClickNewRequest(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickRequestType(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 CreateNewReqIndicatorPopUp(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickClose(driver);
-                Sleep(3000);
-                //ClickIndicatorBulk(driver);
-                Sleep(3000);
-                //IndicatorUploadBulkFile(driver);
+                Utils.Sleep(3000);
             }
-
-
-
         }
-
     }
 
     public bool ClickDataSet(IWebDriver driver)
@@ -68,15 +56,13 @@ public class Program
             return false;
         }
     }
-
     public static bool ClickNewRequest(IWebDriver driver)
     {
         try
         {
             var dataSetLinkNewReq = driver.FindElement(By.CssSelector("a.item-button[href*='/workflow/requests/requests?reqType=1'][onclick*='showLoader()']"));
             dataSetLinkNewReq.Click();
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             return true;
         }
         catch (Exception ex)
@@ -91,13 +77,10 @@ public class Program
         {
             JsonFileReader lx = new();
             var createSec = new NewRequest(driver);
-
             var retVals = lx.ReadJsonFileSelectCheckBoxes();
-
             var reqType = retVals.CheckBoxNumbers.RequestType;
-            Sleep(3000);
+            Utils.Sleep(3000);
             IWebElement btn = null;
-
             switch (reqType)
             {
                 case (int)RequestType.AuthorizationRequest:
@@ -131,21 +114,17 @@ public class Program
                 btn.Click();
             }
 
-            Sleep(2000);
+            Utils.Sleep(2000);
 
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName("table")));
-
-
             var table = createSec.table;
             var rowCount = 0;
             if (table != null)
             {
                 var rows = createSec.rows;
                 var rowIndexes = retVals.CheckBoxNumbers.GetIndexArray();
-
                 rowCount = rows.Count() - 1;
-
                 foreach (var item in rowIndexes)
                 {
                     IWebElement checkbox = createSec.rows[item].FindElement(By.Name("SelItemIds"));
@@ -157,11 +136,10 @@ public class Program
                     }
                 }
             }
-            Sleep(3000);
+            Utils.Sleep(3000);
 
             return rowCount.ToString();
         }
-
         catch (Exception ex)
         {
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
@@ -181,7 +159,6 @@ public class Program
         }
     }
 
-
     #region Indicators
     public static void ClickIndicators(IWebDriver driver)
     {
@@ -200,28 +177,21 @@ public class Program
         try
         {
             var inidi = new Indicator(driver);
-
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonFileDataIndicator();
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             //Access the Sector
             SelectElement dropdownSec = new SelectElement(inidi.dropDownCascadeSecor);
             dropdownSec.SelectByIndex(retVal.IndicatorDataSelector.SectorIndex);
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             //Access the Category
             SelectElement dropdownCat = new SelectElement(inidi.dropDownCat);
             dropdownCat.SelectByIndex(retVal.IndicatorDataSelector.CategoryIndex);
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             //Access the Category
             SelectElement dropdownTab = new SelectElement(inidi.dropDownTable);
             dropdownTab.SelectByIndex(retVal.IndicatorDataSelector.TableIndex);
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             inidi.ClickContinue();
         }
         catch (Exception ex)
@@ -235,40 +205,26 @@ public class Program
         try
         {
             JsonFileReader jsonFileReader = new();
-
             var indicatoor = new Indicator(driver);
-
             var RequestInforVal = jsonFileReader.ReadJsonFileForNewRequestIndicator();
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             IWebElement overlappingDiv = driver.FindElement(By.CssSelector(".col-7.text-right"));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.display='none';", overlappingDiv);
             IWebElement button = driver.FindElement(By.Id("btnReqSelect"));
-
             IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
             js.ExecuteScript("window.scrollTo(0, 0);");
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             var dataSetLink = wait.Until(d => d.FindElement(By.Id("btnReqSelect")));
-
-            //The Sleep is Inportant so the Pop-Div is loaded to the  DOM
-            Sleep(4000);
-
+            //The Utils.Sleep is Inportant so the Pop-Div is loaded to the  DOM
+            Utils.Sleep(4000);
             button.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             indicatoor.EnterRequestInfo(RequestInforVal.IndicatorRequestData.Title, RequestInforVal.IndicatorRequestData.Reason);
-            Sleep(2000);
-
+            Utils.Sleep(2000);
             indicatoor.ClickSave();
-
-            Sleep(8000);
-
+            Utils.Sleep(8000);
             indicatoor.ClickOk();
-
             return true;
         }
 
@@ -278,14 +234,5 @@ public class Program
             return false;
         }
     }
-
     #endregion
-
-
-    private static void Sleep(int time)
-    {
-        Thread.Sleep(time);
-    }
-
-
 }

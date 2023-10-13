@@ -1,34 +1,20 @@
-﻿using System;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
+﻿using OpenQA.Selenium;
+using SuccessLogin;
 
 public class Sector
 {
     private readonly IWebDriver _webDriver;
-
-
     public Sector(IWebDriver webDriver)
     {
         _webDriver = webDriver;
-
     }
-
     public virtual IWebElement txtName => _webDriver.FindElement(By.Id("Name"));
     public virtual IWebElement txtTitle => _webDriver.FindElement(By.Id("Title"));
     public virtual IWebElement btnSubmit => _webDriver.FindElement(By.XPath("//input[@type='submit']"));
     public virtual IWebElement btnClose => _webDriver.FindElement(By.CssSelector("button.btn.btn-secondary[data-dismiss='modal']"));
     public virtual IWebElement textMsgRes => _webDriver.FindElement(By.CssSelector("p[style='display: block;']"));
 
-
-    public IWebElement btnClickNew
-    {
-        get
-        {
-            var wait = new WebDriverWait(_webDriver, TimeSpan.FromSeconds(10));
-            return wait.Until(ExpectedConditions.ElementIsVisible(By.CssSelector("a.item-button[data-modal='']")));
-        }
-    }
+    public virtual IWebElement btnClickNew => _webDriver.FindElement(By.CssSelector("a.item-button[data-modal='']"));
 
     public virtual IWebElement btnClickOk => _webDriver.FindElement(By.CssSelector("button.confirm[style*='display: inline-block;'][style*='background-color: rgb(140, 212, 245);']"));
 

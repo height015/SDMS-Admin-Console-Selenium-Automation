@@ -4,6 +4,8 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
+using SuccessLogin.Utils;
+
 
 namespace NewQuickFlash;
 
@@ -18,42 +20,24 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
 
             if (login)
             {
-
-
                 //QuickFlashes
                 #region Quick Flashes Operations
                 ClickCMS(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickQuickFlashCard(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickNewQuickFlashCard(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ProcessNewQFlash(driver);
-
-                //PopUpDataSet(driver);
-                //Sleep(3000);
-                //ProcessQFlashDataSetSelector(driver);
-                //Sleep(3000);
-                //PopUpTimePeriod(driver);
-                //Sleep(3000);
-                //ProcessTimePeriodQFlashSelector(driver);
-
                 #endregion
             }
-
-
         }
-
     }
-
 
     public static void ClickCMS(IWebDriver driver)
     {
@@ -74,7 +58,7 @@ public class Program
         {
             var btnClear = driver.FindElement(By.LinkText("Clear"));
             btnClear.Click();
-            Sleep(2000);
+            Utils.Sleep(2000);
             return true;
         }
         catch (Exception ex)
@@ -132,8 +116,7 @@ public class Program
         {
             var btnNewReq = driver.FindElement(By.XPath("//a[contains(@href, '/shop/q-flashes/add')]"));
             btnNewReq.Click();
-
-            Sleep(2000);
+            Utils.Sleep(2000);
             return true;
         }
         catch (Exception ex)
@@ -147,18 +130,14 @@ public class Program
         try
         {
             var Fcontent = new QuickFlashes(driver);
-
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonCMSQFlash();
-
-            Fcontent.dropDownSector.SelectDropDown(retVal.QFlashDataSector.SectorIndex);
-            Sleep(1000);
-            Fcontent.dropDownCategory.SelectDropDown(retVal.QFlashDataSector.CategoryIndex);
-            Sleep(1000);
-            Fcontent.dropDownTable.SelectDropDown(retVal.QFlashDataSector.TableIndex);
-
-            Sleep(4000);
+            Fcontent.dropDownSector.SelectDropDownByIndex(retVal.QFlashDataSector.SectorIndex);
+            Utils.Sleep(1000);
+            Fcontent.dropDownCategory.SelectDropDownByIndex(retVal.QFlashDataSector.CategoryIndex);
+            Utils.Sleep(1000);
+            Fcontent.dropDownTable.SelectDropDownByIndex(retVal.QFlashDataSector.TableIndex);
+            Utils.Sleep(4000);
             var indicatoros = Fcontent.table;
             var rowCount = 0;
             if (indicatoros != null)
@@ -166,12 +145,9 @@ public class Program
                 var rowCounts = Fcontent.rows.Count();
                 var rows = Fcontent.rows;
                 var rowIndexes = retVal.QFlashDataSector.GetIndexArray();
-
                 rowCount = rows.Count();
-
                 foreach (var item in rowIndexes)
                 {
-
                     IWebElement checkbox = Fcontent.rows[item].FindElement(By.Name("SelIndiIds"));
                     checkbox.Click();
                     rowCount--;
@@ -179,17 +155,11 @@ public class Program
                     {
                         break;
                     }
-
                 }
             }
 
-            Sleep(3000);
-
-
-
+            Utils.Sleep(3000);
             Fcontent.ClickContinue();
-
-
         }
         catch (Exception ex)
         {
@@ -201,17 +171,11 @@ public class Program
         try
         {
             var Fcontent = new QuickFlashes(driver);
-
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonCMSQFlash();
-
             var perodTypeValz = Fcontent.readonlyInput;
             var dataVal = perodTypeValz.GetAttribute("data-value");
             var perodTypeVal = perodTypeValz.GetAttribute("value");
-
-
-
             switch (perodTypeVal)
             {
                 case "Daily":
@@ -219,24 +183,18 @@ public class Program
                 case "Weekly":
                     int startYear = int.Parse(retVal.QFlashDataSector.StartDate);
                     int stopYear = int.Parse(retVal.QFlashDataSector.StopDate);
-
                     var startyr = driver.FindElement(By.Id("txtWeekStartPeriod"));
                     var stopyr = driver.FindElement(By.Id("txtWeekStopPeriod"));
-
                     DateTime startOfYear = new DateTime(startYear, 1, 1);
                     string formattedstartOfYear = startOfYear.ToString("yyyy-'W'ww", CultureInfo.InvariantCulture);
-
                     DateTime endOfYear = new DateTime(stopYear, 12, 31);
                     string formattedendOfYear = startOfYear.ToString("yyyy-'W'ww", CultureInfo.InvariantCulture);
-
                     startyr.Clear();
                     stopyr.Clear();
                     startyr.SendKeys(formattedstartOfYear);
                     perodTypeValz.Click();
                     stopyr.SendKeys(formattedendOfYear);
                     perodTypeValz.Click();
-
-
                     break;
                 case "Monthly":
                     break;
@@ -260,23 +218,15 @@ public class Program
                     break;
             }
 
-            Sleep(4000);
-
+            Utils.Sleep(4000);
             Fcontent.btnContinueSelection.Click();
-
-            Sleep(3000);
+            Utils.Sleep(3000);
             var dataSetLink = driver.FindElement(By.LinkText("Content"));
             dataSetLink.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             ProcessNewQFlash(driver);
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             Fcontent.ClickOk();
-
-
         }
         catch (Exception ex)
         {
@@ -289,36 +239,26 @@ public class Program
         try
         {
             var Fcontent = new QuickFlashes(driver);
-
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonCMSQFlash();
-
-
             var name = retVal.QFlashDataSector?.Name;
             var title = retVal.QFlashDataSector?.Title;
             var arrType = retVal.QFlashDataSector?.ArrowType;
             var arrDirec = retVal.QFlashDataSector?.ArrowDirection;
             var value = retVal.QFlashDataSector.Value;
             var Note = retVal.QFlashDataSector?.Note;
-
             Fcontent.txtBoxName.SendKeys(name);
             Fcontent.txtBoxTitle.SendKeys(title);
-            Fcontent.dropDwnArrow.SelectDropDown(arrType.Value);
-            Fcontent.dropDwonArrDir.SelectDropDown(arrDirec.Value);
+            Fcontent.dropDwnArrow.SelectDropDownByIndex(arrType.Value);
+            Fcontent.dropDwonArrDir.SelectDropDownByIndex(arrDirec.Value);
             Fcontent.txtValue.SendKeys(value.ToString());
             Fcontent.txtExplanation.SendKeys(Note);
-
             Fcontent.btnSaves.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             var dataSetLink = wait.Until(d => Fcontent.btnYes);
-
             dataSetLink.Click();
-            Sleep(3000);
-
+            Utils.Sleep(3000);
         }
         catch (Exception ex)
         {
@@ -327,12 +267,5 @@ public class Program
 
     }
     #endregion
-
-
-
-    private static void Sleep(int timeVal)
-    {
-        Thread.Sleep(timeVal);
-    }
 
 }

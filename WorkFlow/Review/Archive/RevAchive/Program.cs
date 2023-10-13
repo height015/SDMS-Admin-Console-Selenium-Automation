@@ -1,11 +1,12 @@
-﻿using OpenQA.Selenium.Chrome;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
-using SuccessLogin;
 using ReviewAuthorization;
+using SuccessLogin;
+using SuccessLogin.Utils;
+
 
 namespace AuthArchive;
-
 public class Program
 {
     public static void Main(string[] args)
@@ -13,23 +14,19 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
             if (login)
             {
                 ClickWorkFlow(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 ClickReviewArchive(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 CreateNewDataIndicatorPopUp(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 ClickClose(driver);
             }
         }
-
     }
     public static void ClickClose(IWebDriver driver)
     {
@@ -73,8 +70,7 @@ public class Program
         try
         {
             var auth = new RevAuthorizationObj(driver);
-
-            Wait(2000);
+            Utils.Sleep(2000);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileWorkFlowSelection();
             var dropdownCat = new SelectElement(auth.dropDownCat);
@@ -91,12 +87,10 @@ public class Program
                     IWebElement desiredRow = rows[btnRow - 1];
                     IWebElement actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
                     actionsButton.Click();
-                    Wait(2000);
-
+                    Utils.Sleep(2000);
                     IWebElement RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Review Item']"));
                     RevBoxPopUp.Click();
-                    Wait(3000);
-
+                    Utils.Sleep(3000);
                     var retCom = jsonFileReader.ReadJsonFileWorkFlowReview();
                     auth.EnterRevComment(retCom.ReviewSelection.Comment);
                     if (retCom.ReviewSelection.Status == true)
@@ -106,11 +100,10 @@ public class Program
                     else
                     {
                         auth.rdBtnDecline.Click();
-
                     }
-                    Wait(2000);
+                    Utils.Sleep(2000);
                     auth.ClickSubmit();
-                    Wait(3000);
+                    Utils.Sleep(3000);
                     auth.ClickOk();
                 }
             }
@@ -121,10 +114,4 @@ public class Program
         }
     }
     #endregion
-
-    private static void Wait(int time)
-    {
-        Thread.Sleep(time);
-    }
-
 }

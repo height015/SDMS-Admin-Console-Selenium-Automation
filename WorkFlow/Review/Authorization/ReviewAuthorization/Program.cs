@@ -2,9 +2,9 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SuccessLogin;
+using SuccessLogin.Utils;
 
 namespace AuthAuthorization;
-
 
 public class Program
 {
@@ -13,31 +13,23 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
             if (login)
             {
-
                 ClickWorkFlow(driver);
                 ClickApprovalsAuthorization(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 ClickIndicatorPopUp(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 ClickClose(driver);
-
             }
         }
-
     }
-
     public static void ClickClose(IWebDriver driver)
     {
         try
         {
-
             var closeBtn = driver.FindElement(By.CssSelector("a[href*='/workflow-mgt']"));
             closeBtn.Click();
         }
@@ -46,7 +38,6 @@ public class Program
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
     }
-
     public static void ClickWorkFlow(IWebDriver driver)
     {
         try
@@ -60,14 +51,12 @@ public class Program
         }
     }
 
-
     #region Approvals   
     public static void ClickApprovalsAuthorization(IWebDriver driver)
     {
         try
         {
             var dataSetLink = driver.FindElement(By.CssSelector("a.card[href*='/workflow/processes/pending-approvals?reqType=1']"));
-
             dataSetLink.Click();
         }
         catch (Exception ex)
@@ -80,17 +69,13 @@ public class Program
         try
         {
             var auth = new AuthAuthorizationObj(driver);
-            Wait(2000);
+            Utils.Sleep(2000);
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonFileWorkFlowSelection();
-
             var dropdownCat = new SelectElement(auth.dropDownCat);
-
             dropdownCat.SelectByIndex(retVal.WorkFlowSelection.CategoryIndex);
             var sourceType = new SelectElement(auth.dropDownType);
             sourceType.SelectByIndex(retVal.WorkFlowSelection.SourceTypeIndex);
-
             var table = auth.tblResult;
             if (table != null)
             {
@@ -101,12 +86,10 @@ public class Program
                     IWebElement desiredRow = rows[btnRow - 1];
                     IWebElement actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
                     actionsButton.Click();
-                    Wait(2000);
-
+                    Utils.Sleep(2000);
                     IWebElement RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Approve Item']"));
                     RevBoxPopUp.Click();
-                    Wait(3000);
-
+                    Utils.Sleep(3000);
                     var retCom = jsonFileReader.ReadJsonFileWorkFlowReview();
                     auth.EnterRevComment(retCom.ReviewSelection.Comment);
                     if (retCom.ReviewSelection.Status == true)
@@ -117,10 +100,9 @@ public class Program
                     {
                         auth.rdBtnDecline.Click();
                     }
-
-                    Wait(2000);
+                    Utils.Sleep(2000);
                     auth.ClickSubmit();
-                    Wait(3000);
+                    Utils.Sleep(3000);
                     auth.ClickOk();
                 }
             }
@@ -131,9 +113,4 @@ public class Program
         }
     }
     #endregion
-
-    private static void Wait(int time)
-    {
-        Thread.Sleep(time);
-    }
 }

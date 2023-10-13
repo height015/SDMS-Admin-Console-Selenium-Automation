@@ -7,17 +7,14 @@ public static class MethodsExtentions
     {
         element.SendKeys(value);
     }
-
     public static void Clicks(this IWebElement element)
     {
         element.Click();
     }
-
     public static void SelectDropDown(this IWebElement element, string value)
     {
         new SelectElement(element).SelectByValue(value);
     }
-
     public static void SelectDropDownIndex(this IWebElement element, int value)
     {
         new SelectElement(element).SelectByIndex(value);

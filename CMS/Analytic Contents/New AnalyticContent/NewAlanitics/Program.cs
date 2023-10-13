@@ -4,8 +4,9 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
+using SuccessLogin.Utils;
 
-namespace NewAlanitics;
+namespace NewAnalytics;
 
 public class Program
 {
@@ -18,38 +19,28 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
-
             if (login)
             {
                 #region Analytics Operations
                 ClickCMS(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickAnalyticCard(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickNew(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 PopUpDataSet(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ProcessDataSetSelector(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 PopUpTimePeriod(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ProcessTimePeriodSelector(driver);
                 #endregion
-
-
             }
-
-
         }
-
     }
-
 
     public static void ClickCMS(IWebDriver driver)
     {
@@ -63,14 +54,13 @@ public class Program
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
     }
-
     public static bool ClickClear(IWebDriver driver)
     {
         try
         {
             var btnClear = driver.FindElement(By.LinkText("Clear"));
             btnClear.Click();
-            Sleep(2000);
+            Utils.Sleep(2000);
             return true;
         }
         catch (Exception ex)
@@ -79,7 +69,6 @@ public class Program
             return false;
         }
     }
-
     public static void PopUpDataSet(IWebDriver driver)
     {
         try
@@ -93,7 +82,6 @@ public class Program
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
     }
-
     public static void PopUpTimePeriod(IWebDriver driver)
     {
         try
@@ -109,8 +97,6 @@ public class Program
     }
 
     #region Analytics
-
-
     public static void ClickAnalyticCard(IWebDriver driver)
     {
         try
@@ -130,7 +116,7 @@ public class Program
             var btnNewReq = driver.FindElement(By.CssSelector("a.item-button[href*='/shop/analytics/add-content?sectorId=-1']"));
             btnNewReq.Click();
 
-            Sleep(2000);
+            Utils.Sleep(2000);
             return true;
         }
         catch (Exception ex)
@@ -145,28 +131,20 @@ public class Program
         try
         {
             var analytics = new Analytics(driver);
-
             var jsonFileReader = new JsonFileReader();
-
             var retVal = jsonFileReader.ReadJsonCMSAnalytis();
-
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.Id("DSectorId")));
-
-            analytics.dropDownSector.SelectDropDown(retVal.AnalyticsDataSector.SectorIndex);
-            Sleep(1000);
-
+            analytics.dropDownSector.SelectDropDownByIndex(retVal.AnalyticsDataSector.SectorIndex);
+            Utils.Sleep(1000);
             var wait2 = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait2.Until(ExpectedConditions.ElementIsVisible(By.Id("DCategoryId")));
-
-            analytics.dropDownCategory.SelectDropDown(retVal.AnalyticsDataSector.CategoryIndex);
-            Sleep(1000);
-
+            analytics.dropDownCategory.SelectDropDownByIndex(retVal.AnalyticsDataSector.CategoryIndex);
+            Utils.Sleep(1000);
             var wait3 = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait3.Until(ExpectedConditions.ElementIsVisible(By.Id("DTableId")));
-            analytics.dropDownTable.SelectDropDown(retVal.AnalyticsDataSector.TableIndex);
-
-            Sleep(4000);
+            analytics.dropDownTable.SelectDropDownByIndex(retVal.AnalyticsDataSector.TableIndex);
+            Utils.Sleep(4000);
             var indicatoros = analytics.table;
             var rowCount = 0;
             if (indicatoros != null)
@@ -187,8 +165,7 @@ public class Program
                     }
                 }
             }
-
-            Sleep(3000);
+            Utils.Sleep(3000);
             analytics.ClickContinue();
         }
         catch (Exception ex)
@@ -196,23 +173,16 @@ public class Program
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
     }
-
-
     public static void ProcessTimePeriodSelector(IWebDriver driver)
     {
         try
         {
             var analytics = new Analytics(driver);
-
             var jsonFileReader = new JsonFileReader();
-
             var retVal = jsonFileReader.ReadJsonCMSAnalytis();
-
             var perodTypeValz = analytics.readonlyInput;
             var dataVal = perodTypeValz.GetAttribute("data-value");
             var perodTypeVal = perodTypeValz.GetAttribute("value");
-
-
 
             switch (perodTypeVal)
             {
@@ -221,24 +191,18 @@ public class Program
                 case "Weekly":
                     int startYear = int.Parse(retVal.AnalyticsDataSector.StartDate);
                     int stopYear = int.Parse(retVal.AnalyticsDataSector.StopDate);
-
                     var startyr = driver.FindElement(By.Id("txtWeekStartPeriod"));
                     var stopyr = driver.FindElement(By.Id("txtWeekStopPeriod"));
-
                     DateTime startOfYear = new DateTime(startYear, 1, 1);
                     string formattedstartOfYear = startOfYear.ToString("yyyy-'W'ww", CultureInfo.InvariantCulture);
-
                     DateTime endOfYear = new DateTime(stopYear, 12, 31);
                     string formattedendOfYear = startOfYear.ToString("yyyy-'W'ww", CultureInfo.InvariantCulture);
-
                     startyr.Clear();
                     stopyr.Clear();
                     startyr.SendKeys(formattedstartOfYear);
                     perodTypeValz.Click();
                     stopyr.SendKeys(formattedendOfYear);
                     perodTypeValz.Click();
-
-
                     break;
                 case "Monthly":
                     break;
@@ -261,72 +225,48 @@ public class Program
                 default:
                     break;
             }
-
-            Sleep(4000);
-
-
+            Utils.Sleep(3000);
             analytics.btnContinueSelection.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var dataSetLink = driver.FindElement(By.LinkText("Content"));
             dataSetLink.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             ProcessAnalyticContent(driver);
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             analytics.ClickOk();
-
-
         }
         catch (Exception ex)
         {
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
     }
-
-
     public static void ProcessAnalyticContent(IWebDriver driver)
     {
         try
         {
             var analytics = new Analytics(driver);
-
-            var  jsonFileReader = new JsonFileReader();
-
+            var jsonFileReader = new JsonFileReader();
             var retVal = jsonFileReader.ReadJsonCMSAnalytis();
-
-
             var name = retVal.AnalyticsDataSector?.Name;
             var title = retVal.AnalyticsDataSector?.Title;
             var titleSeries = retVal.AnalyticsDataSector?.SeriesTitle;
             var chatType = retVal.AnalyticsDataSector.ChartTypeIndex;
             var contentType = retVal.AnalyticsDataSector.ContentSpotIndex;
             var Note = retVal.AnalyticsDataSector?.Note;
-
             analytics.txtBoxName.SendKeys(name);
             analytics.txtBoxTitle.SendKeys(title);
             analytics.txtBoxSeries.SendKeys(titleSeries);
-            analytics.dropDwnSeriesType.SelectDropDown(chatType);
-            analytics.dropDwnContentSpot.SelectDropDown(contentType);
+            analytics.dropDwnSeriesType.SelectDropDownByIndex(chatType);
+            analytics.dropDwnContentSpot.SelectDropDownByIndex(contentType);
             analytics.txtNote.SendKeys(Note);
-
             analytics.btnSaveConten.Click();
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             analytics.btnSaves.Click();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             var dataSetLink = wait.Until(d => analytics.btnYes);
-
             dataSetLink.Click();
-            Sleep(3000);
-
+            Utils.Sleep(3000);
         }
         catch (Exception ex)
         {
@@ -335,12 +275,4 @@ public class Program
 
     }
     #endregion
-
-
-
-    private static void Sleep(int timeVal)
-    {
-        Thread.Sleep(timeVal);
-    }
-
 }

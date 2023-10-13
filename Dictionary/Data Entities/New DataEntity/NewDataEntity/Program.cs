@@ -1,52 +1,39 @@
-﻿using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using SuccessLogin;
+using SuccessLogin.Utils;
 
 namespace NewDataEntity;
-
-
-
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
-
     public static void Main(string[] args)
     {
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
             if (login)
             {
-                Sleep(300);
+                Utils.Sleep(300);
                 ClickDictionary(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickDataEntity(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 ClickDataEntityNewRequest(driver);
-                Sleep(3000);
+                Utils.Sleep(3000);
                 data.DataEntityEntry(driver);
-                Sleep(3000);
-                //ClickNewRequest(driver);
-                //Sleep(3000);
-                //ClickRequestType(driver);
-                //CreateNewReqGenericPopUp(driver);
+                Utils.Sleep(3000);
             }
         }
     }
-
     public static void ClickDictionary(IWebDriver driver)
     {
         try
         {
             var dataSetLink = driver.FindElement(By.LinkText("Dictionaries"));
             dataSetLink.Click();
-
         }
         catch (Exception ex)
         {
@@ -74,7 +61,7 @@ public class Program
         {
             var dataSetLinkNewReq = driver.FindElement(By.CssSelector("a[href^='/dictionary/data-entities/add']"));
             dataSetLinkNewReq.Click();
-            Sleep(3000);
+            Utils.Sleep(3000);
             return true;
         }
         catch (Exception ex)
@@ -90,21 +77,13 @@ public class Program
             JsonFileReader jsonFileReader = new();
             var freqVal = jsonFileReader.ReadJsonFileDataEntity();
             var createSec = new DataEntities(driver);
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             createSec.NewDatadataEntityEntry(freqVal.DataEntities.Name, freqVal.DataEntities.ShortName);
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             createSec.ClickSubmit();
-
-            Sleep(3000);
-
+            Utils.Sleep(3000);
             createSec.ClickOk();
-
             return true;
-
         }
 
         catch (Exception ex)
@@ -113,11 +92,6 @@ public class Program
             return false;
         }
     }
-
     #endregion
 
-    private static void Sleep(int timeVal)
-    {
-        Thread.Sleep(timeVal);
-    }
 }

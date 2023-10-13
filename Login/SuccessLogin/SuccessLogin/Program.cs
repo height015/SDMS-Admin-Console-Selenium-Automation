@@ -1,6 +1,5 @@
-﻿using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
-
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 namespace SuccessLogin;
 
 public class Program
@@ -12,9 +11,7 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var customMethod = new Program();
-
             bool login = customMethod.LoginSuccess(driver);
-
         }
 
     }
@@ -30,18 +27,18 @@ public class Program
             string loginUrl = _URL + "/account/sign-in";
             driver.Navigate().GoToUrl(loginUrl);
 
-            Sleep(3000);
+            Utils.Utils.Sleep(3000);
             var loginPage = new LoginPage(driver);
 
             loginPage.EnterUserNameAndPassword(loginVal.LoginParameters.Username, loginVal.LoginParameters.Password);
 
-            Sleep(3000);
+            Utils.Utils.Sleep(3000);
             loginPage.ClickLogin();
-            Sleep(3000);
+            Utils.Utils.Sleep(3000);
 
             var url = _URL + "/dashboard";
             driver.Navigate().GoToUrl(url);
-            Sleep(3000);
+            Utils.Utils.Sleep(3000);
             return true;
         }
 
@@ -62,13 +59,10 @@ public class Program
             var loginVal = jsonFileReader.ReadJsonFileEmptyUserNameLoginCredential();
             string loginUrl = _URL + "/account/sign-in";
             driver.Navigate().GoToUrl(loginUrl);
-
             var loginPage = new LoginPage(driver);
-
             loginPage.EnterUserNameAndPassword(loginVal.LoginEmptyUserName.Username, loginVal.LoginEmptyUserName.Password);
             loginPage.ClickLogin();
-
-            Sleep(2000);
+            Utils.Utils.Sleep(2000);
             return driver.Url == _URL + "/dashboard";
         }
 
@@ -91,7 +85,7 @@ public class Program
             loginPage.EnterUserNameAndPassword("useradmin@xplugng.com", "Pasxw0rd");
             loginPage.ClickLogin();
 
-            Sleep(2000);
+            Utils.Utils.Sleep(2000);
             return driver.Url == _URL + "/dashboard";
         }
 
@@ -102,8 +96,5 @@ public class Program
         }
     }
 
-    private void Sleep(int timeVal)
-    {
-        Thread.Sleep(timeVal);
-    }
+
 }

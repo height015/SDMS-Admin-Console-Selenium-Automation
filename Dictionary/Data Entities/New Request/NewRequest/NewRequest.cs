@@ -18,7 +18,6 @@ public class NewRequest
     public IWebElement btnSubmit => _webDriver.FindElement(By.XPath("//input[@type='submit']"));
     public IWebElement btnClose => _webDriver.FindElement(By.CssSelector("button.btn.btn-secondary[data-dismiss='modal']"));
     public IWebElement btnClickOk => _webDriver.FindElement(By.CssSelector("button.confirm[style*='display: inline-block;'][style*='background-color: rgb(140, 212, 245);']"));
-
     public IWebElement btnSave => _webDriver.FindElement(By.Id("btnSave"));
     public IWebElement table => _webDriver.FindElement(By.ClassName("table")) ?? null;
     // Get all the rows in the table
@@ -30,7 +29,6 @@ public class NewRequest
         txtTitle.SendKeys(title);
         txtReason.SendKeys(reason);
     }
-
     public void ClickNew()
     {
         Newlink.Clicks();
@@ -44,13 +42,10 @@ public class NewRequest
     {
         btnSubmit.Clicks();
     }
-
-
     public void ClickSave()
     {
         btnSave.Clicks();
     }
-
     public void ClickOk()
     {
         btnClickOk.Clicks();
