@@ -3,8 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
 
-namespace NewRequest;
-
+namespace NewRequestIndicator;
 public class NewRequest
 {
     private readonly IWebDriver _webDriver;

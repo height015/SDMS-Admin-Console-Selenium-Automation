@@ -2,7 +2,6 @@
 using SuccessLogin;
 
 namespace NewRequestIndicator;
-
 public class Indicator
 {
     private readonly IWebDriver _webDriver;

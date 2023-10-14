@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
+    <PackageReference Include="Moq" Version="4.20.69" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,7 +24,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Categories\NewCategory\CreateNewCategory\CreateNewCategory.csproj" />
+    <ProjectReference Include="..\..\..\Categories\RequestCategory\RequestCategory\RequestCategory.csproj" />
+    <ProjectReference Include="..\..\..\Indicators\Bulk Upload\IndicatorBulkUpload\IndicatorBulkUpload.csproj" />
+    <ProjectReference Include="..\..\..\Indicators\New Indicator\NewIndicator\NewIndicator.csproj" />
+    <ProjectReference Include="..\..\..\Indicators\New Request\NewRequest\NewIndicatorRequest.csproj" />
+    <ProjectReference Include="..\..\..\Login\FailureLogin\LoginFailed\LoginFailed.csproj" />
     <ProjectReference Include="..\..\..\Login\SuccessLogin\SuccessLogin\SuccessLogin.csproj" />
+    <ProjectReference Include="..\..\..\Sectors\NewRequest\NewRequest\NewSectorRequest.csproj" />
+    <ProjectReference Include="..\..\..\Sectors\NewSector\AddNewSector\AddNewSector.csproj" />
+    <ProjectReference Include="..\..\..\Tables\NewRequest\NewRequest\NewRequest.csproj" />
+    <ProjectReference Include="..\..\..\Tables\NewTable\NewTable\NewTable.csproj" />
   </ItemGroup>
 
 </Project>

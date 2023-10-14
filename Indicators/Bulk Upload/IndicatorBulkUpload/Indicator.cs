@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SuccessLogin;
-namespace BulkIndicator;
 
+namespace BulkIndicator;
 public class Indicator
 {
     private readonly IWebDriver _webDriver;

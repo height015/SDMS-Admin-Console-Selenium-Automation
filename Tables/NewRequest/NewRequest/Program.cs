@@ -6,7 +6,7 @@ using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
 using SuccessLogin.Utils;
 
-namespace NewRequest;
+namespace NewRequestTable;
 
 public class Program
 {

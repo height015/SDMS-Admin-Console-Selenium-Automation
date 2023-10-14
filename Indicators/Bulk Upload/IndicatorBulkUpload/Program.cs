@@ -1,12 +1,11 @@
-﻿using BulkIndicator;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SuccessLogin;
 using SuccessLogin.Utils;
 
 
-namespace IndicatorBulkUpload;
+namespace BulkIndicator;
 
 public class Program
 {

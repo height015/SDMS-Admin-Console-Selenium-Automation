@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SuccessLogin;
-namespace NewIndicator;
 
+namespace NewIndicator;
 
 public class Indicator
 {

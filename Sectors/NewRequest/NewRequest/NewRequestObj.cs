@@ -1,6 +1,8 @@
 ﻿using OpenQA.Selenium;
 using SuccessLogin;
 
+namespace NewSectorRequest;
+
 public class NewRequestObj
 {
     private readonly IWebDriver _webDriver;

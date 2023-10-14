@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddNewSector", "Sectors\New
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewRequest", "NewRequest", "{6F5A82A7-60CE-456A-B778-3708F718782F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRequest", "Sectors\NewRequest\NewRequest\NewRequest.csproj", "{1D15A0E6-8B73-4D34-A8F6-51A25A670B6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewSectorRequest", "Sectors\NewRequest\NewRequest\NewSectorRequest.csproj", "{1D15A0E6-8B73-4D34-A8F6-51A25A670B6A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Login", "Login", "{F0D3B4C3-443D-478B-A7A2-2EACBE0A2651}"
 EndProject
@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bulk Upload", "Bulk Upload"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewIndicator", "Indicators\New Indicator\NewIndicator\NewIndicator.csproj", "{6D925EB1-D145-499F-B5AE-7FC451587A45}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewRequest", "Indicators\New Request\NewRequest\NewRequest.csproj", "{5166922C-E24D-4672-AFF3-90411B556A26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewIndicatorRequest", "Indicators\New Request\NewRequest\NewIndicatorRequest.csproj", "{5166922C-E24D-4672-AFF3-90411B556A26}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IndicatorBulkUpload", "Indicators\Bulk Upload\IndicatorBulkUpload\IndicatorBulkUpload.csproj", "{445C3D1E-2B80-4B5B-98F9-E84028C175EF}"
 EndProject
@@ -173,7 +173,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XUnitTest", "XUnitTest", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthenticationTest", "AuthenticationTest", "{871ECC8C-683E-4C8C-8D85-EE3264457384}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationTest", "XUnitTest\AuthenticationTest\AuthenticationTest\AuthenticationTest.csproj", "{655DB2E2-ED7F-413D-9658-32923AD7B846}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationTest", "XUnitTest\AuthenticationTest\AuthenticationTest\AuthenticationTest.csproj", "{655DB2E2-ED7F-413D-9658-32923AD7B846}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

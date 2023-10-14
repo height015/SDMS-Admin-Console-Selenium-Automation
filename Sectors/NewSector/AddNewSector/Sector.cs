@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
 
+namespace AddNewSector;
+
 public class Sector
 {
     private readonly IWebDriver _webDriver;

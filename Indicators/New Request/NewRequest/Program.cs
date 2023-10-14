@@ -1,5 +1,4 @@
-﻿using NewRequestIndicator;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
@@ -7,8 +6,7 @@ using SuccessLogin;
 using SuccessLogin.Utils;
 
 
-namespace NewRequest;
-
+namespace NewRequestIndicator;
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";

@@ -7,7 +7,6 @@ using SuccessLogin.Utils;
 
 
 namespace AddNewSector;
-
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
