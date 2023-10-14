@@ -21,23 +21,15 @@ public class Program
         try
         {
             JsonFileReader jsonFileReader = new();
-
             var loginVal = jsonFileReader.ReadJsonFileSuccesLogin();
-
             string loginUrl = _URL + "/account/sign-in";
             driver.Navigate().GoToUrl(loginUrl);
-
             Utils.Utils.Sleep(3000);
             var loginPage = new LoginPage(driver);
-
             loginPage.EnterUserNameAndPassword(loginVal.LoginParameters.Username, loginVal.LoginParameters.Password);
-
+            
             Utils.Utils.Sleep(3000);
             loginPage.ClickLogin();
-            Utils.Utils.Sleep(3000);
-
-            var url = _URL + "/dashboard";
-            driver.Navigate().GoToUrl(url);
             Utils.Utils.Sleep(3000);
             return true;
         }
@@ -79,12 +71,9 @@ public class Program
         {
             string loginUrl = _URL + "/account/sign-in";
             driver.Navigate().GoToUrl(loginUrl);
-
             var loginPage = new LoginPage(driver);
-
             loginPage.EnterUserNameAndPassword("useradmin@xplugng.com", "Pasxw0rd");
             loginPage.ClickLogin();
-
             Utils.Utils.Sleep(2000);
             return driver.Url == _URL + "/dashboard";
         }
