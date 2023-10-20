@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SuccessLogin;
-using SuccessLogin.Utils;
+using Commons;
 
 namespace AuthAuthorization;
 

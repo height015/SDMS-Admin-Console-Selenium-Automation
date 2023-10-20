@@ -1,4 +1,4 @@
-﻿namespace SuccessLogin.Utils;
+﻿namespace Commons;
 public class Utils
 {
     public static void Sleep(int timeVal)

@@ -1,15 +1,18 @@
 ﻿using NewRequestTable;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
-using SuccessLogin;
-using SuccessLogin.Utils;
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewRequestTable;
 
 public class Program
 {
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+    public const string jsonFileName = "Tables.json";
+    public static string jsonFilePath = Path.Combine(desktopPath,
+        "SeleniumTest", jsonFileName);
+
     private static readonly string _URL = "http://197.255.51.104:9035";
 
     //http://197.255.51.104:9008
@@ -72,10 +75,10 @@ public class Program
             driver.WaitForElementToBeClickable(table.dropDownCascadeSecor, 10);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileForTableDataSector();
-            table.dropDownCascadeSecor.SelectDropDownByIndex(retVal.TableDataSelector.OptionToSelect);
+            table.dropDownCascadeSecor.SelectDropDownByIndex(retVal.TableDataSelector.DataSectorIndexToSelect);
             driver.WaitForElementToBeClickable(table.dropDownCascadeSecor, 10);
             Utils.Sleep(2000);
-            table.dropDownCat.SelectDropDownByIndex(1);
+            table.dropDownCat.SelectDropDownByIndex(retVal.TableDataSelector.DataCategoryIndexToSelect);
             table.ClickContinue();
             Utils.Sleep(3000);
         }
@@ -121,7 +124,6 @@ public class Program
                     btn = driver.FindElement(By.LinkText("Authorize"));
                     break;
             }
-
             if (btn != null)
             {
                 btn.Click();
@@ -155,14 +157,12 @@ public class Program
             return string.Empty;
         }
     }
-
     public static bool TableCreateNewReqPopUp(IWebDriver driver)
     {
         try
         {
-            JsonFileReader jsonFileReader = new();
             var table = new Tables(driver);
-            var RequestInforVal = jsonFileReader.ReadJsonFileForNewRequestTable();
+            var RequestInforVal = ReadJsonFileForNewRequestTable();
             Utils.Sleep(3000);
             var overlappingDiv = driver.FindElement(By.CssSelector(".col-7.text-right"));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.display='none';", overlappingDiv);
@@ -184,6 +184,27 @@ public class Program
         {
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
             return false;
+        }
+    }
+    #endregion
+
+    #region Utility
+    private  static TableRequestDataContainer ReadJsonFileForNewRequestTable()
+    {
+        try
+        {
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<TableRequestDataContainer>(jsonContent);
+                return retVal;
+            }
+            return new TableRequestDataContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new TableRequestDataContainer();
         }
     }
     #endregion

@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Moq;
-using SuccessLogin;
+using Commons;
 using System.Collections.ObjectModel;
 using OpenQA.Selenium.Support.UI;
 
@@ -11,7 +11,6 @@ namespace DataSetTest;
 public class DataSetTest : IDisposable
 {
     private readonly IWebDriver driver;
-
     private readonly SuccessLogin.Program loginObj;
 
     private readonly AddNewSector.Program data;
@@ -22,7 +21,6 @@ public class DataSetTest : IDisposable
    
     private readonly NewTable.Program newTable;
     private readonly NewRequestTable.Program newTableRequest;
-
 
     private readonly BulkIndicator.Program bulkIndicator;
     private readonly NewIndicator.Program newIndicator;
@@ -38,7 +36,6 @@ public class DataSetTest : IDisposable
         newIndicator = new NewIndicator.Program();
         createNewCategory = new CreateNewCategory.Program();
         requestCategory = new RequestCategory.Program();
-
     }
 
     [Fact]
@@ -46,13 +43,9 @@ public class DataSetTest : IDisposable
     {
         bool loginSuccess = loginObj.LoginSuccess(driver);
         Assert.True(loginSuccess.Equals(true));
-
         var clickDataSet = new AddNewSector.Program();
-
         var check = clickDataSet.ClickDataSet(driver);
-
         Assert.True(check.Equals(true));
-
     }
 
     [Fact]
@@ -76,14 +69,6 @@ public class DataSetTest : IDisposable
         createSecMock.Setup(cs => cs.textMsgRes.Text).
             Returns("Data Sector information was saved successfully");
         var jsonFileReaderMock = new Mock<JsonFileReader>();
-        jsonFileReaderMock.Setup(jfr => jfr.ReadJsonFileCreateSector()).Returns(new DataSector
-        {
-            SectorField = new SectorField
-            {
-                Name = "XUnit Test",
-                Title = "XUnit Title"
-            }
-        });
         var myClass = new AddNewSector.Program();
         var result = myClass.CreateNewDataSectorSuccess(driver);
         Assert.Equal("", result);
@@ -97,11 +82,8 @@ public class DataSetTest : IDisposable
         driverMock
             .Setup(d => d.FindElement(It.IsAny<By>()))
             .Returns(elementMock.Object);
-
         bool result = NewSectorRequest.Program.ClickNewRequest(driverMock.Object);
-
         Assert.True(result);
-
         elementMock.Verify(e => e.Click(), Times.Once);
     }
 
@@ -109,13 +91,10 @@ public class DataSetTest : IDisposable
     public void ClickNewRequest_ShouldReturnFalseOnError()
     {
         var driverMock = new Mock<IWebDriver>();
-
         driverMock
             .Setup(d => d.FindElement(It.IsAny<By>()))
             .Throws(new Exception("Test Exception"));
-
         var result = NewSectorRequest.Program.ClickNewRequest(driverMock.Object);
-
         Assert.False(result);
     }
 
@@ -124,7 +103,6 @@ public class DataSetTest : IDisposable
     {
         var driverMock = new Mock<IWebDriver>();
         var newRequestMock = new Mock<NewSectorRequest.NewRequestObj>();
-
         var jsonFileReaderMock = new Mock<JsonFileReader>();
         jsonFileReaderMock.Setup(jfr => jfr.ReadJsonFileSelectCheckBoxes()).Returns(
             new CheckBoxCount
@@ -151,16 +129,6 @@ public class DataSetTest : IDisposable
         var createSecMock = new Mock<NewSectorRequest.NewRequestObj>();
         var loginVal = new CheckBoxCount();
         jsonFileReaderMock.Setup(jfr => jfr.ReadJsonFileSelectCheckBoxes()).Returns(loginVal);
-        var RequestInforVal = new Request();
-        jsonFileReaderMock.Setup(jfr => jfr.ReadJsonFileForSelectCheckBoxesProcessNewRequest()).Returns(new Request
-        {
-            RequestInformation = new RequestInformation
-            {
-                Title = "Selenium Test",
-                Reason = "Selenium Test",
-            }
-        });
-
         var datconsole = new NewSectorRequest.Program();
         var result = datconsole.RequestInfBox(driverMock.Object);
         // Assert
@@ -176,7 +144,6 @@ public class DataSetTest : IDisposable
         var loginVal = new CheckBoxCount();
         jsonFileReaderMock.Setup(jfr => jfr.ReadJsonFileSelectCheckBoxes()).Returns(loginVal);
         var RequestInforVal = new CatRequest();
-        jsonFileReaderMock.Setup(jfr => jfr.ReadJsonFileForSelectCheckBoxesProcessCatNewRequest()).Returns(RequestInforVal);
         var dataConsole = new RequestCategory.Program();
         var result = dataConsole.CategoryRequestInfBox(driverMock.Object);
         Assert.False(result);
@@ -254,15 +221,6 @@ public class DataSetTest : IDisposable
         var jsonFileReaderMock = new Mock<JsonFileReader>();
         driverMock.Setup(driver => driver.FindElement(By.CssSelector("a.item-button[href*='/dataset/categories/add']"))).Returns(newDataCategoryButtonMock.Object);
         newDataCategoryButtonMock.Setup(button => button.Click());
-        jsonFileReaderMock.Setup(jfr => jfr.ReadJsonFileForEnterNewDataCategory())
-            .Returns(new DataCategoryContainer
-            {
-                DataCategory = new DataCategory
-                {
-                    Name = "CategoryName",
-                    Title = "CategoryTitle"
-                }
-            });
         var result = CreateNewCategory.Program.ClickNewDataCategoryButton(driverMock.Object);
         newDataCategoryButtonMock.Verify(button => button.Click(), Times.Once);
         Assert.False(result);

@@ -2,13 +2,17 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using SuccessLogin;
-using SuccessLogin.Utils;
+using Commons;
+using Newtonsoft.Json;
 
 namespace RequestCategory;
 
 public class Program
 {
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+    public static string jsonFileNameTbl = "Category.json";
+    public static string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileNameTbl);
+
     private static readonly string _URL = "http://197.255.51.104:9035";
 
     //http://197.255.51.104:9008
@@ -32,9 +36,10 @@ public class Program
                 ClickCategoryCard(driver);
                 ClickNewRequest(driver);
                 ClickRequestType(driver);
-                SelectCheckBoxes(driver);
-                data.CategoryRequestInfBox(driver);
                 Utils.Sleep(3000);
+                SelectCheckBoxes(driver);
+                Utils.Sleep(3000);
+                data.CategoryRequestInfBox(driver);
                 #endregion
             }
         }
@@ -182,7 +187,7 @@ public class Program
             JsonFileReader jsonFileReader = new();
             var loginVal = jsonFileReader.ReadJsonFileSelectCheckBoxes();
             var createSec = new NewRequest(driver);
-            var RequestInforVal = jsonFileReader.ReadJsonFileForSelectCheckBoxesProcessCatNewRequest();
+            var RequestInforVal = ReadJsonFileForSelectCheckBoxesProcessCatNewRequest();
             Utils.Sleep(3000);
             IWebElement overlappingDiv = driver.FindElement(By.CssSelector(".col-7.text-right"));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.display='none';", overlappingDiv);
@@ -255,5 +260,29 @@ public class Program
     }
 
     #endregion
+
+    #region Utility
+    private static CatRequest ReadJsonFileForSelectCheckBoxesProcessCatNewRequest()
+    {
+        try
+        {
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<CatRequest>(jsonContent);
+                return retVal;
+            }
+            return new CatRequest();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new CatRequest();
+        }
+    }
+
+    #endregion
+
+
 
 }

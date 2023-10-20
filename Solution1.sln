@@ -175,6 +175,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthenticationTest", "Authe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationTest", "XUnitTest\AuthenticationTest\AuthenticationTest\AuthenticationTest.csproj", "{655DB2E2-ED7F-413D-9658-32923AD7B846}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{B85F63AD-576A-48F7-9229-F14D3ECA7ECF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons", "Shared\Commons\Commons.csproj", "{2B05B6D1-2149-413D-B579-982E59FAD737}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -313,6 +317,10 @@ Global
 		{655DB2E2-ED7F-413D-9658-32923AD7B846}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{655DB2E2-ED7F-413D-9658-32923AD7B846}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{655DB2E2-ED7F-413D-9658-32923AD7B846}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B05B6D1-2149-413D-B579-982E59FAD737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B05B6D1-2149-413D-B579-982E59FAD737}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B05B6D1-2149-413D-B579-982E59FAD737}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B05B6D1-2149-413D-B579-982E59FAD737}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -395,6 +403,7 @@ Global
 		{B274BB61-83AF-48F5-8FA1-014867800CEA} = {748FDA08-FFEB-43A0-8D3A-7BF0CE82AF15}
 		{871ECC8C-683E-4C8C-8D85-EE3264457384} = {D7A0E5C0-4286-4D95-9C59-E59F3D31945F}
 		{655DB2E2-ED7F-413D-9658-32923AD7B846} = {871ECC8C-683E-4C8C-8D85-EE3264457384}
+		{2B05B6D1-2149-413D-B579-982E59FAD737} = {B85F63AD-576A-48F7-9229-F14D3ECA7ECF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D46B67E9-3E39-4E9B-9522-6AC55C28A10C}

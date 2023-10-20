@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SuccessLogin;
-
-
+namespace Commons;
 public class JsonFileReader
 {
 
@@ -10,8 +8,7 @@ public class JsonFileReader
 
     public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
     public const string jsonFileName = "JData.json";
-    public string jsonFilePath = Path.Combine(desktopPath, jsonFileName);
-
+    public string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileName);
 
     public LoginParameter ReadJsonFileSuccesLogin()
     {
@@ -22,7 +19,7 @@ public class JsonFileReader
             {
                 var jsonContent = File.ReadAllText(jsonFilePath);
 
-                LoginParameter retVal = JsonConvert.DeserializeObject<LoginParameter>(jsonContent);
+                var retVal = JsonConvert.DeserializeObject<LoginParameter>(jsonContent);
 
                 return retVal;
             }
@@ -87,508 +84,130 @@ public class JsonFileReader
 
     #endregion
 
-    public virtual DataSector ReadJsonFileCreateSector()
-    {
-        try
-        {
+    //public virtual DataSectorEmpty ReadJsonFileCreateSectorFailed()
+    //{
+    //    try
+    //    {
 
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
+    //        if (File.Exists(jsonFilePath))
+    //        {
+    //            var jsonContent = File.ReadAllText(jsonFilePath);
 
-                DataSector retVal = JsonConvert.DeserializeObject<DataSector>(jsonContent);
+    //            DataSectorEmpty retVal = JsonConvert.DeserializeObject<DataSectorEmpty>(jsonContent);
 
-                return retVal;
-            }
-
-
-            return new DataSector();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new DataSector();
-        }
-    }
-
-    public virtual DataSectorEmpty ReadJsonFileCreateSectorFailed()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-
-                DataSectorEmpty retVal = JsonConvert.DeserializeObject<DataSectorEmpty>(jsonContent);
-
-                return retVal;
-            }
+    //            return retVal;
+    //        }
 
 
-            return new DataSectorEmpty();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
+    //        return new DataSectorEmpty();
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        var message = ex.Message;
 
-            return new DataSectorEmpty();
-        }
-    }
+    //        return new DataSectorEmpty();
+    //    }
+    //}
 
     public virtual CheckBoxCount ReadJsonFileSelectCheckBoxes()
     {
         try
         {
+            string jsonFileNamex = "Request.json";
+            string jsonFilePathx = Path.Combine(desktopPath, jsonFileNamex);
 
-            if (File.Exists(jsonFilePath))
+            if (File.Exists(jsonFilePathx))
             {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-
-                CheckBoxCount retVal = JsonConvert.DeserializeObject<CheckBoxCount>(jsonContent);
-
+                var jsonContent = File.ReadAllText(jsonFilePathx);
+                var retVal = JsonConvert.DeserializeObject<CheckBoxCount>(jsonContent);
                 return retVal;
             }
-
-
             return new CheckBoxCount();
         }
         catch (Exception ex)
         {
             var message = ex.Message;
-
             return new CheckBoxCount();
         }
     }
-
-    public virtual Request ReadJsonFileForSelectCheckBoxesProcessNewRequest()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-
-                Request retVal = JsonConvert.DeserializeObject<Request>(jsonContent);
-
-                return retVal;
-            }
-
-
-            return new Request();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new Request();
-        }
-    }
-
-    public virtual CatRequest ReadJsonFileForSelectCheckBoxesProcessCatNewRequest()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-
-                CatRequest retVal = JsonConvert.DeserializeObject<CatRequest>(jsonContent);
-
-                return retVal;
-            }
-
-
-            return new CatRequest();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new CatRequest();
-        }
-    }
-
     public virtual CatalogueContainer ReadJsonFileForSelectOptionCatalogSelector()
     {
         try
         {
-
-            if (File.Exists(jsonFilePath))
+              string jsonFileNamex = "Category.json";
+              string jsonFilePathx = Path.Combine(desktopPath, jsonFileNamex);
+            if (File.Exists(jsonFilePathx))
             {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-
-                CatalogueContainer retVal = JsonConvert.DeserializeObject<CatalogueContainer>(jsonContent);
-
+                var jsonContent = File.ReadAllText(jsonFilePathx);
+                var retVal = JsonConvert.DeserializeObject<CatalogueContainer>(jsonContent);
                 return retVal;
             }
-
-
             return new CatalogueContainer();
         }
         catch (Exception ex)
         {
             var message = ex.Message;
-
             return new CatalogueContainer();
-        }
-    }
-
-    public virtual DataCategoryContainer ReadJsonFileForEnterNewDataCategory()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-
-                DataCategoryContainer retVal = JsonConvert.DeserializeObject<DataCategoryContainer>(jsonContent);
-
-                return retVal;
-            }
-
-
-            return new DataCategoryContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new DataCategoryContainer();
         }
     }
     public TableDataSelectorContainer ReadJsonFileForTableDataSector()
     {
         try
         {
+              string jsonFileNameTbl = "Tables.json";
+              string jsonFilePath = Path.Combine(desktopPath, jsonFileNameTbl);
             if (File.Exists(jsonFilePath))
             {
                 var jsonContent = File.ReadAllText(jsonFilePath);
-
-                TableDataSelectorContainer retVal = JsonConvert.DeserializeObject<TableDataSelectorContainer>(jsonContent);
-
+                var retVal = JsonConvert.DeserializeObject<TableDataSelectorContainer>(jsonContent);
                 return retVal;
             }
-
-
             return new TableDataSelectorContainer();
         }
         catch (Exception ex)
         {
             var message = ex.Message;
-
             return new TableDataSelectorContainer();
-        }
-    }
-
-    public TableFrequencyContainer ReadJsonFileForTableFrequency()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-
-                TableFrequencyContainer retVal = JsonConvert.DeserializeObject<TableFrequencyContainer>(jsonContent);
-
-                return retVal;
-            }
-
-
-            return new TableFrequencyContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new TableFrequencyContainer();
-        }
-    }
-
-    public TableUnitContainer ReadJsonFileForTableUnit()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-
-                TableUnitContainer retVal = JsonConvert.DeserializeObject<TableUnitContainer>(jsonContent);
-
-                return retVal;
-            }
-
-
-            return new TableUnitContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new TableUnitContainer();
-        }
-    }
-
-
-    public TableNewDataContainer ReadJsonFileForNewDataTable()
-    {
-        try
-        {
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                TableNewDataContainer retVal = JsonConvert.DeserializeObject<TableNewDataContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new TableNewDataContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new TableNewDataContainer();
-        }
-    }
-
-    public IndicatorRequestDataContainer ReadJsonFileForNewRequestIndicator()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                IndicatorRequestDataContainer retVal = JsonConvert.DeserializeObject<IndicatorRequestDataContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new IndicatorRequestDataContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new IndicatorRequestDataContainer();
-        }
-    }
-
-    public TableRequestDataContainer ReadJsonFileForNewRequestTable()
-    {
-        try
-        {
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                TableRequestDataContainer retVal = JsonConvert.DeserializeObject<TableRequestDataContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new TableRequestDataContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new TableRequestDataContainer();
-        }
-    }
-
-    public DataTableSettingContainer ReadJsonFileNewDataTableSettings()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                DataTableSettingContainer retVal = JsonConvert.DeserializeObject<DataTableSettingContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new DataTableSettingContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new DataTableSettingContainer();
-        }
-    }
-
-    public DataTableTxtValContainer ReadJsonFileDataTableTxt()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                DataTableTxtValContainer retVal = JsonConvert.DeserializeObject<DataTableTxtValContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new DataTableTxtValContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new DataTableTxtValContainer();
-        }
-    }
-
-    public DataFrequencyContainer ReadJsonFileDataFrequency()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                DataFrequencyContainer retVal = JsonConvert.DeserializeObject<DataFrequencyContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new DataFrequencyContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new DataFrequencyContainer();
-        }
-    }
-
-    public DataUnitContainer ReadJsonFileDataUnit()
-    {
-        try
-        {
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                DataUnitContainer retVal = JsonConvert.DeserializeObject<DataUnitContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new DataUnitContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new DataUnitContainer();
-        }
-    }
-    public DataEntitiesContainer ReadJsonFileDataEntity()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                DataEntitiesContainer retVal = JsonConvert.DeserializeObject<DataEntitiesContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new DataEntitiesContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new DataEntitiesContainer();
-        }
-    }
-    public DataSourceContainer ReadJsonFileDataSource()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                DataSourceContainer retVal = JsonConvert.DeserializeObject<DataSourceContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new DataSourceContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new DataSourceContainer();
         }
     }
     public IndicatorDataSelectorContainer ReadJsonFileDataIndicator()
     {
         try
         {
+              string jsonIndiFileName = "Indicator.json";
+              string jsonFilePath = Path.Combine(desktopPath, jsonIndiFileName);
             if (File.Exists(jsonFilePath))
             {
                 var jsonContent = File.ReadAllText(jsonFilePath);
-                IndicatorDataSelectorContainer retVal = JsonConvert.DeserializeObject<IndicatorDataSelectorContainer>(jsonContent);
+                var retVal = JsonConvert.DeserializeObject<IndicatorDataSelectorContainer>(jsonContent);
                 return retVal;
             }
-
             return new IndicatorDataSelectorContainer();
         }
         catch (Exception ex)
         {
             var message = ex.Message;
-
             return new IndicatorDataSelectorContainer();
         }
     }
-
-    public NewDataIndicatorContainer ReadJsonFileNewDataIndicator()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                NewDataIndicatorContainer retVal = JsonConvert.DeserializeObject<NewDataIndicatorContainer>(jsonContent);
-                return retVal;
-            }
-
-            return new NewDataIndicatorContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-
-            return new NewDataIndicatorContainer();
-        }
-    }
-
-
     public WorkFlowSelectionContaner ReadJsonFileWorkFlowSelection()
     {
         try
         {
+            string jsonIndiFileName = "WorkFlow.json";
+            string jsonFilePath = Path.Combine(desktopPath, jsonIndiFileName);
+
             if (File.Exists(jsonFilePath))
             {
                 var jsonContent = File.ReadAllText(jsonFilePath);
-                WorkFlowSelectionContaner retVal = JsonConvert.DeserializeObject<WorkFlowSelectionContaner>(jsonContent);
+                var retVal = JsonConvert.DeserializeObject<WorkFlowSelectionContaner>(jsonContent);
                 return retVal;
             }
-
             return new WorkFlowSelectionContaner();
         }
         catch (Exception ex)
         {
             var message = ex.Message;
-
             return new WorkFlowSelectionContaner();
         }
     }
@@ -596,10 +215,13 @@ public class JsonFileReader
     {
         try
         {
+            string jsonIndiFileName = "WorkFlow.json";
+            string jsonFilePath = Path.Combine(desktopPath, jsonIndiFileName);
+
             if (File.Exists(jsonFilePath))
             {
                 var jsonContent = File.ReadAllText(jsonFilePath);
-                ReviewSelectionContaner retVal = JsonConvert.DeserializeObject<ReviewSelectionContaner>(jsonContent);
+                var retVal = JsonConvert.DeserializeObject<ReviewSelectionContaner>(jsonContent);
                 return retVal;
             }
 
@@ -608,146 +230,15 @@ public class JsonFileReader
         catch (Exception ex)
         {
             var message = ex.Message;
-
             return new ReviewSelectionContaner();
         }
     }
-
-    public AnalyticsDataSectorContainer ReadJsonCMSAnalytis()
-    {
-        try
-        {
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                AnalyticsDataSectorContainer retVal = JsonConvert.DeserializeObject<AnalyticsDataSectorContainer>(jsonContent);
-                return retVal;
-            }
-            return new AnalyticsDataSectorContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-            return new AnalyticsDataSectorContainer();
-        }
-
-    }
-
-
-    public FlashCardDataSectorContainer ReadJsonCMSFlashCard()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                FlashCardDataSectorContainer retVal = JsonConvert.DeserializeObject<FlashCardDataSectorContainer>(jsonContent);
-                return retVal;
-            }
-            return new FlashCardDataSectorContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-            return new FlashCardDataSectorContainer();
-        }
-
-    }
-
-    public FeaturedContentDataSectorContainer ReadJsonCMSFeaturedContent()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                FeaturedContentDataSectorContainer retVal = JsonConvert.DeserializeObject<FeaturedContentDataSectorContainer>(jsonContent);
-                return retVal;
-            }
-            return new FeaturedContentDataSectorContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-            return new FeaturedContentDataSectorContainer();
-        }
-
-    }
-
-    public QFlashDataSectorContainer ReadJsonCMSQFlash()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                QFlashDataSectorContainer retVal = JsonConvert.DeserializeObject<QFlashDataSectorContainer>(jsonContent);
-                return retVal;
-            }
-            return new QFlashDataSectorContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-            return new QFlashDataSectorContainer();
-        }
-
-    }
-
-
-    public BulkTableNewDataContainer ReadJsonBulkTabe()
-    {
-        try
-        {
-
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                var retVal = JsonConvert.DeserializeObject<BulkTableNewDataContainer>(jsonContent);
-                return retVal;
-            }
-            return new BulkTableNewDataContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-            return new BulkTableNewDataContainer();
-        }
-
-    }
-
-
-
-    public BulkIndicatorNewDataContainer ReadJsonBulkIndicator()
-    {
-        try
-        {
-            if (File.Exists(jsonFilePath))
-            {
-                var jsonContent = File.ReadAllText(jsonFilePath);
-                var retVal = JsonConvert.DeserializeObject<BulkIndicatorNewDataContainer>(jsonContent);
-                return retVal;
-            }
-            return new BulkIndicatorNewDataContainer();
-        }
-        catch (Exception ex)
-        {
-            var message = ex.Message;
-            return new BulkIndicatorNewDataContainer();
-        }
-
-    }
-
 }
 
 
 //LoginFailedTest
 #region Portal Login
 #region Success Login Object
-
 public class LoginParameters
 {
     public string Username { get; set; }
@@ -761,14 +252,12 @@ public class LoginParameter
 
 }
 #endregion
-
 #region Wrong Credentails Login Object
 
 public class LoginFailedTest
 {
     public string Username { get; set; }
     public string Password { get; set; }
-
 }
 
 public class LoginFailedParameter
@@ -776,14 +265,11 @@ public class LoginFailedParameter
     public LoginFailedTest LoginFailedTest { get; set; }
 }
 #endregion
-
 #region Wrong Credentails Empty UserName Fields
-
 public class LoginEmptyUserName
 {
     public string Username { get; set; }
     public string Password { get; set; }
-
 }
 
 public class LoginEmptyUserNameParameter
@@ -801,30 +287,23 @@ public class SectorField
 {
     public string Name { get; set; }
     public string Title { get; set; }
-
 }
-
 public class DataSector
 {
     public SectorField SectorField { get; set; }
-
 }
-
 public class SectorFieldEmpty
 {
     public string Name { get; set; }
     public string Title { get; set; }
-
 }
 
 public class DataSectorEmpty
 {
     public SectorFieldEmpty SectorFieldEmpty { get; set; }
-
 }
 
 #endregion
-
 
 #region New Request
 
@@ -832,7 +311,6 @@ public class CheckBoxNumbers
 {
     public string Index { get; set; }
     public int RequestType { get; set; }
-
 
     public int[] GetIndexArray()
     {
@@ -843,7 +321,6 @@ public class CheckBoxNumbers
 public class CheckBoxCount
 {
     public CheckBoxNumbers CheckBoxNumbers { get; set; }
-
 }
 
 public class RequestInformation
@@ -856,7 +333,6 @@ public class RequestInformation
 public class Request
 {
     public RequestInformation RequestInformation { get; set; }
-
 }
 
 
@@ -906,13 +382,11 @@ public class DataCategory
 {
     public string Name { get; set; }
     public string Title { get; set; }
-
 }
 
 public class DataCategoryContainer
 {
     public DataCategory DataCategory { get; set; }
-
 }
 
 #endregion
@@ -923,7 +397,8 @@ public class DataCategoryContainer
 #region Table
 public class TableDataSelector
 {
-    public int OptionToSelect { get; set; }
+    public int DataSectorIndexToSelect { get; set; }
+    public int DataCategoryIndexToSelect { get; set; }
 }
 
 public class TableDataSelectorContainer
@@ -936,7 +411,6 @@ public class TableNewData
     public string Name { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-
 }
 
 public class TableNewDataContainer
@@ -948,7 +422,6 @@ public class TableRequestData
 {
     public string Title { get; set; }
     public string Reason { get; set; }
-
 }
 public class TableRequestDataContainer
 {
@@ -956,7 +429,7 @@ public class TableRequestDataContainer
 }
 public class TableFrequency
 {
-    public int OptionToSelect { get; set; }
+   public int OptionToSelect { get; set; }
 }
 
 public class TableFrequencyContainer
@@ -966,12 +439,12 @@ public class TableFrequencyContainer
 
 public class TableUnit
 {
-    public int OptionToSelect { get; set; }
+   public int OptionToSelect { get; set; }
 }
 
 public class TableUnitContainer
 {
-    public TableUnit TableUnit { get; set; }
+   public TableUnit TableUnit { get; set; }
 }
 
 public class DataTableSetting
@@ -983,11 +456,9 @@ public class DataTableSetting
     public bool Data5 { get; set; }
 
 }
-
 public class DataTableSettingContainer
 {
     public DataTableSetting DataTableSetting { get; set; }
-
 }
 
 public class DataTableTxtVal
@@ -1052,7 +523,7 @@ public class BulkTableNewDataContainer
 #endregion
 
 #region  Indicators
-public class IndicatorRequestData
+public class RequestData
 {
     public string Title { get; set; }
     public string Reason { get; set; }
@@ -1060,7 +531,7 @@ public class IndicatorRequestData
 
 public class IndicatorRequestDataContainer
 {
-    public IndicatorRequestData IndicatorRequestData { get; set; }
+    public RequestData RequestData { get; set; }
 }
 
 
@@ -1242,7 +713,6 @@ public class AnalyticsDataSector
     {
         return IndicatorsIndexToSelect?.Split(',').Select(int.Parse).ToArray() ?? new int[0];
     }
-
 }
 
 public class AnalyticsDataSectorContainer

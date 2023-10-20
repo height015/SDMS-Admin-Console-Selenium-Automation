@@ -4,14 +4,16 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewFlashCard;
 
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
+
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
@@ -134,7 +136,7 @@ public class Program
         {
             var flashcard = new FlashCards(driver);
             JsonFileReader jsonFileReader = new();
-            var retVal = jsonFileReader.ReadJsonCMSFlashCard();
+            var retVal = ReadJsonCMSFlashCard();
             flashcard.dropDownSector.SelectDropDownByIndex(retVal.FlashCardDataSector.SectorIndex);
             Utils.Sleep(1000);
             flashcard.dropDownCategory.SelectDropDownByIndex(retVal.FlashCardDataSector.CategoryIndex);
@@ -148,9 +150,7 @@ public class Program
                 var rowCounts = flashcard.rows.Count();
                 var rows = flashcard.rows;
                 var rowIndexes = retVal.FlashCardDataSector.GetIndexArray();
-
                 rowCount = rows.Count();
-
                 foreach (var item in rowIndexes)
                 {
                     IWebElement checkbox = flashcard.rows[item].FindElement(By.Name("SelIndiIds"));
@@ -162,7 +162,6 @@ public class Program
                     }
                 }
             }
-
             Utils.Sleep(3000);
             flashcard.ClickContinue();
         }
@@ -177,7 +176,7 @@ public class Program
         {
             var analytics = new FlashCards(driver);
             JsonFileReader jsonFileReader = new();
-            var retVal = jsonFileReader.ReadJsonCMSFlashCard();
+            var retVal = ReadJsonCMSFlashCard();
             var perodTypeValz = analytics.readonlyInput;
             var dataVal = perodTypeValz.GetAttribute("data-value");
             var perodTypeVal = perodTypeValz.GetAttribute("value");
@@ -243,7 +242,7 @@ public class Program
         {
             var analytics = new FlashCards(driver);
             JsonFileReader jsonFileReader = new();
-            var retVal = jsonFileReader.ReadJsonCMSFlashCard();
+            var retVal = ReadJsonCMSFlashCard();
             var name = retVal.FlashCardDataSector?.Name;
             var title = retVal.FlashCardDataSector?.Title;
             var titleSeries = retVal.FlashCardDataSector?.SeriesTitle;
@@ -269,8 +268,34 @@ public class Program
         {
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
-
     }
     #endregion
 
+
+    #region Utility
+    public static FlashCardDataSectorContainer ReadJsonCMSFlashCard()
+    {
+        try
+        {
+              string jsonFileName = "FCard.json";
+              string jsonFilePath = Path.Combine(desktopPath,
+                  "SeleniumTest", jsonFileName);
+
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<FlashCardDataSectorContainer>(jsonContent);
+                return retVal;
+            }
+            return new FlashCardDataSectorContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new FlashCardDataSectorContainer();
+        }
+
+    }
+
+    #endregion
 }

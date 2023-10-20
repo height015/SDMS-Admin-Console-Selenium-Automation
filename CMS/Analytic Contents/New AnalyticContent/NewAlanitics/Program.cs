@@ -4,12 +4,15 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
-using SuccessLogin.Utils;
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewAnalytics;
 
-public class Program
+public  class Program
 {
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
     private static readonly string _URL = "http://197.255.51.104:9035";
 
     //http://197.255.51.104:9008
@@ -136,8 +139,7 @@ public class Program
 
 
     var analytics = new Analytics(driver);
-            var jsonFileReader = new JsonFileReader();
-            var retVal = jsonFileReader.ReadJsonCMSAnalytis();
+            var retVal = ReadJsonCMSAnalytis();
             driver.WaitForElementToBeClickable(analytics.dropDownSector, 10);
             analytics.dropDownSector.SelectDropDownByIndex(retVal.AnalyticsDataSector.SectorIndex);
             Utils.Sleep(1000);
@@ -179,8 +181,7 @@ public class Program
         try
         {
             var analytics = new Analytics(driver);
-            var jsonFileReader = new JsonFileReader();
-            var retVal = jsonFileReader.ReadJsonCMSAnalytis();
+            var retVal = ReadJsonCMSAnalytis();
             var perodTypeValz = analytics.readonlyInput;
             var dataVal = perodTypeValz.GetAttribute("data-value");
             var perodTypeVal = perodTypeValz.GetAttribute("value");
@@ -245,8 +246,7 @@ public class Program
         try
         {
             var analytics = new Analytics(driver);
-            var jsonFileReader = new JsonFileReader();
-            var retVal = jsonFileReader.ReadJsonCMSAnalytis();
+            var retVal = ReadJsonCMSAnalytis();
             var name = retVal.AnalyticsDataSector?.Name;
             var title = retVal.AnalyticsDataSector?.Title;
             var titleSeries = retVal.AnalyticsDataSector?.SeriesTitle;
@@ -274,5 +274,33 @@ public class Program
         }
 
     }
+    #endregion
+
+
+
+    #region Utility
+    public static AnalyticsDataSectorContainer ReadJsonCMSAnalytis()
+    {
+        try
+        {
+             string jsonFileName = "Analytics.json";
+             string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileName);
+
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<AnalyticsDataSectorContainer>(jsonContent);
+                return retVal;
+            }
+            return new AnalyticsDataSectorContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new AnalyticsDataSectorContainer();
+        }
+
+    }
+
     #endregion
 }

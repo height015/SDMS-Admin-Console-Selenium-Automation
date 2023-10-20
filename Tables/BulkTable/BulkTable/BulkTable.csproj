@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,11 +9,12 @@
 
   <ItemGroup>
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0" />
-    <PackageReference Include="Selenium.Support" Version="4.14.0" />
+	  <PackageReference Include="Selenium.Support" Version="4.14.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Login\SuccessLogin\SuccessLogin\SuccessLogin.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Commons\Commons.csproj" />
   </ItemGroup>
 
 </Project>

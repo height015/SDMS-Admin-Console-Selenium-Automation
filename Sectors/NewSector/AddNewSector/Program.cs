@@ -2,13 +2,15 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AddNewSector;
 public class Program
 {
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
     private static readonly string _URL = "http://197.255.51.104:9035";
 
     //http://197.255.51.104:9008
@@ -69,12 +71,11 @@ public class Program
     {
         try
         {
-            JsonFileReader jsonFileReader = new();
-            var loginVal = jsonFileReader.ReadJsonFileCreateSector();
+            var secVal = ReadJsonFileCreateSector();
             var createSec = new Sector(driver);
             createSec.ClickNew();
             Utils.Sleep(2000);
-            createSec.EnterNameAndTitle(loginVal.SectorField.Name, loginVal.SectorField.Title);
+            createSec.EnterNameAndTitle(secVal.SectorField.Name, secVal.SectorField.Title);
             createSec.ClickSubmit();
             Utils.Sleep(3000);
             var teaxVal = createSec.textMsgRes.Text;
@@ -85,11 +86,34 @@ public class Program
             createSec.ClickOk();
             return teaxVal;
         }
-
         catch (Exception ex)
         {
             Console.WriteLine($"{ex.Source} and {ex.StackTrace} and {ex.InnerException} and {ex.Message}");
             return string.Empty;
+        }
+    }
+    #endregion
+
+    #region Utility
+    public static DataSector ReadJsonFileCreateSector()
+    {
+        try
+        {
+            string jsonFileNameSec = "Sector.json";
+            string jsonFilePathSec = Path.Combine(desktopPath,
+                 "SeleniumTest", jsonFileNameSec);
+            if (File.Exists(jsonFilePathSec))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePathSec);
+                var retVal = JsonConvert.DeserializeObject<DataSector>(jsonContent);
+                return retVal;
+            }
+            return new DataSector();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new DataSector();
         }
     }
     #endregion

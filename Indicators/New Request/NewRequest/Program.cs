@@ -2,13 +2,16 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewRequestIndicator;
 public class Program
 {
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+    public static string jsonFileNameTbl = "Indicator.json";
+    public static string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileNameTbl);
+
     private static readonly string _URL = "http://197.255.51.104:9035";
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
@@ -204,7 +207,7 @@ public class Program
         {
             JsonFileReader jsonFileReader = new();
             var indicatoor = new Indicator(driver);
-            var RequestInforVal = jsonFileReader.ReadJsonFileForNewRequestIndicator();
+            var RequestInforVal = ReadJsonFileForNewRequestIndicator();
             Utils.Sleep(3000);
             IWebElement overlappingDiv = driver.FindElement(By.CssSelector(".col-7.text-right"));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.display='none';", overlappingDiv);
@@ -218,7 +221,7 @@ public class Program
             Utils.Sleep(4000);
             button.Click();
             Utils.Sleep(3000);
-            indicatoor.EnterRequestInfo(RequestInforVal.IndicatorRequestData.Title, RequestInforVal.IndicatorRequestData.Reason);
+            indicatoor.EnterRequestInfo(RequestInforVal.RequestData.Title, RequestInforVal.RequestData.Reason);
             Utils.Sleep(2000);
             indicatoor.ClickSave();
             Utils.Sleep(8000);
@@ -232,5 +235,27 @@ public class Program
             return false;
         }
     }
+    #endregion
+
+    #region Utility
+    private static IndicatorRequestDataContainer ReadJsonFileForNewRequestIndicator()
+    {
+        try
+        {
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<IndicatorRequestDataContainer>(jsonContent);
+                return retVal;
+            }
+            return new IndicatorRequestDataContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new IndicatorRequestDataContainer();
+        }
+    }
+
     #endregion
 }

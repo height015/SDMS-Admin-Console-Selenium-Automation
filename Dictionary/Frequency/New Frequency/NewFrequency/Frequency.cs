@@ -1,6 +1,6 @@
 ﻿
 using OpenQA.Selenium;
-using SuccessLogin;
+using Commons;
 
 namespace NewFrequency;
 public class Frequency

@@ -1,17 +1,14 @@
 ﻿using OpenQA.Selenium;
-using SuccessLogin;
+using Commons;
 
 namespace NewSectorRequest;
 
 public class NewRequestObj
 {
     private readonly IWebDriver _webDriver;
-
-
     public NewRequestObj(IWebDriver webDriver)
     {
         _webDriver = webDriver;
-
     }
     public IWebElement txtTitle => _webDriver.FindElement(By.Id("txtTitle"));
     public IWebElement txtReson => _webDriver.FindElement(By.Id("txtReason"));

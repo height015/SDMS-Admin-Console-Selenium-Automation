@@ -1,14 +1,15 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewIndicator;
 
 public class Program
 {
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
     private static readonly string _URL = "http://197.255.51.104:9035";
 
     //http://197.255.51.104:9008
@@ -96,8 +97,7 @@ public class Program
             var inidi = new Indicator(driver);
             Utils.Sleep(2000);
             inidi.ClickNew();
-            JsonFileReader jsonFileReader = new();
-            var retVal = jsonFileReader.ReadJsonFileNewDataIndicator();
+            var retVal = ReadJsonFileNewDataIndicator();
             Utils.Sleep(4000);
             string textName = retVal.NewDataIndicator.Name;
             inidi.txtBoxName.SendKeys(textName);
@@ -131,6 +131,31 @@ public class Program
         {
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
+    }
+
+    #endregion
+    #region Utility
+    public static NewDataIndicatorContainer ReadJsonFileNewDataIndicator()
+    {
+        try
+        {
+            string jsonFileName = "Indicator.json";
+            string jsonFilePath = Path.Combine(desktopPath,
+                "SeleniumTest", jsonFileName);
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                NewDataIndicatorContainer retVal = JsonConvert.DeserializeObject<NewDataIndicatorContainer>(jsonContent);
+                return retVal;
+            }
+            return new NewDataIndicatorContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new NewDataIndicatorContainer();
+        }
+
     }
 
     #endregion

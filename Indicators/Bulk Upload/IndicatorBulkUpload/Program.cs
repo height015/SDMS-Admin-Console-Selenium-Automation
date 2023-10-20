@@ -1,15 +1,16 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace BulkIndicator;
 
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
+
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
@@ -121,17 +122,15 @@ public class Program
         var indi = new Indicator(driver);
         try
         {
-            JsonFileReader jsonFileReader = new();
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string fileName = "Indicator_Today.xlsx";
-            string filePath = Path.Combine(desktopPath, fileName);
+            string filePath = Path.Combine(desktopPath, "SeleniumTest", fileName);
             Utils.Sleep(3000);
             indi.btnBrowseFile.SendKeys(filePath);
             indi.btnUpload.Click();
             Utils.Sleep(3000);
             indi.btnClickOk.Click();
             Utils.Sleep(3000);
-            var retVal = jsonFileReader.ReadJsonBulkIndicator();
+            var retVal = ReadJsonBulkIndicator();
             bool modify = retVal.BulkIndicatorNewDataCon.Modify;
             var bulkTableNewDataList = retVal.BulkIndicatorNewDataCon.BulkIndicatorNewData;
             var tableRes = indi.table;
@@ -183,6 +182,28 @@ public class Program
             indi.btnClickOk.Click();
             Utils.Sleep(9000);
         }
+    }
+    public static BulkIndicatorNewDataContainer ReadJsonBulkIndicator()
+    {
+        try
+        {
+              string jsonFileName = "Indicator.json";
+              string jsonFilePath = Path.Combine(desktopPath, 
+                  "SeleniumTest", jsonFileName);
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<BulkIndicatorNewDataContainer>(jsonContent);
+                return retVal;
+            }
+            return new BulkIndicatorNewDataContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new BulkIndicatorNewDataContainer();
+        }
+
     }
     #endregion
 }

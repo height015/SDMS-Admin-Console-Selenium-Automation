@@ -1,14 +1,21 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewTable;
 
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
+
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+    public static string jsonFileName = "Tables.json";
+    public static string jsonFilePath = Path.Combine(desktopPath,
+        "SeleniumTest", jsonFileName);
+
+
     public static void Main(string[] args)
     {
         using (var driver = new ChromeDriver())
@@ -64,9 +71,9 @@ public class Program
             var table = new Tables(driver);
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileForTableDataSector();
-            table.dropDownCascadeSecor.SelectDropDownByIndex(retVal.TableDataSelector.OptionToSelect);
+            table.dropDownCascadeSecor.SelectDropDownByIndex(retVal.TableDataSelector.DataSectorIndexToSelect);
             driver.WaitForElementToBeClickable(table.dropDownCat, 10);
-            table.dropDownCat.SelectDropDownByIndex(1);
+            table.dropDownCat.SelectDropDownByIndex(retVal.TableDataSelector.DataCategoryIndexToSelect);
             table.ClickContinue();
             Utils.Sleep(3000);
         }
@@ -84,15 +91,15 @@ public class Program
             table.ClickNew();
             Utils.Sleep(4000);
             JsonFileReader jsonFileReader = new();
-            var retVal = jsonFileReader.ReadJsonFileForNewDataTable();
+            var retVal = ReadJsonFileForNewDataTable();
             driver.WaitForElementToBeClickable(table.txtBoxName, 10);
             table.EnterTableInfoData(retVal.TableNewData.Name, retVal.TableNewData.Title, retVal.TableNewData.Description);
-            var dropFreq = jsonFileReader.ReadJsonFileForTableFrequency();
+            var dropFreq = ReadJsonFileForTableFrequency();
             table.dropDownFeq.SelectDropDownByIndex(dropFreq.TableFrequency.OptionToSelect);
-            var dropUnit = jsonFileReader.ReadJsonFileForTableUnit();
+            var dropUnit = ReadJsonFileForTableUnit();
             table.dropDownUnit.SelectDropDownByIndex(dropUnit.TableUnit.OptionToSelect);
-            var switchBoxControl = jsonFileReader.ReadJsonFileNewDataTableSettings();
-            var txtBoxVal = jsonFileReader.ReadJsonFileDataTableTxt();
+            var switchBoxControl = ReadJsonFileNewDataTableSettings();
+            var txtBoxVal = ReadJsonFileDataTableTxt();
             string textData1;
             string textData2;
             string textData3;
@@ -185,5 +192,102 @@ public class Program
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
     }
+    #endregion
+
+
+    #region Utility
+    private static TableNewDataContainer ReadJsonFileForNewDataTable()
+    {
+        try
+        {
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                TableNewDataContainer retVal = JsonConvert.DeserializeObject<TableNewDataContainer>(jsonContent);
+                return retVal;
+            }
+            return new TableNewDataContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new TableNewDataContainer();
+        }
+    }
+
+    private static TableFrequencyContainer ReadJsonFileForTableFrequency()
+    {
+        try
+        {
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<TableFrequencyContainer>(jsonContent);
+                return retVal;
+            }
+            return new TableFrequencyContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new TableFrequencyContainer();
+        }
+    }
+    private static TableUnitContainer ReadJsonFileForTableUnit()
+    {
+        try
+        {
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<TableUnitContainer>(jsonContent);
+                return retVal;
+            }
+            return new TableUnitContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new TableUnitContainer();
+        }
+    }
+
+    private static DataTableSettingContainer ReadJsonFileNewDataTableSettings()
+    {
+        try
+        {
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<DataTableSettingContainer>(jsonContent);
+                return retVal;
+            }
+            return new DataTableSettingContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new DataTableSettingContainer();
+        }
+    }
+    private static DataTableTxtValContainer ReadJsonFileDataTableTxt()
+    {
+        try
+        {
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                DataTableTxtValContainer retVal = JsonConvert.DeserializeObject<DataTableTxtValContainer>(jsonContent);
+                return retVal;
+            }
+            return new DataTableTxtValContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new DataTableTxtValContainer();
+        }
+    }
+
     #endregion
 }

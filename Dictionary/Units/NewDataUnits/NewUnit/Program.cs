@@ -1,13 +1,15 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewUnit;
 
 public class Program
 {
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+    
+
     private static readonly string _URL = "http://197.255.51.104:9035";
     public static void Main(string[] args)
     {
@@ -77,8 +79,7 @@ public class Program
     {
         try
         {
-            JsonFileReader jsonFileReader = new();
-            var freqVal = jsonFileReader.ReadJsonFileDataUnit();
+            var freqVal = ReadJsonFileDataUnit();
             var createSec = new NewRequest(driver);
             Utils.Sleep(3000);
             createSec.NewDataUnitEntery(freqVal.DataUnit.Name, freqVal.DataUnit.ShortName);
@@ -96,5 +97,28 @@ public class Program
         }
     }
     #endregion
+
+
+
+    public static  DataUnitContainer ReadJsonFileDataUnit()
+    {
+        try
+        {
+             string jsonFileName = "Unit.json";
+             string jsonFilePath = Path.Combine(desktopPath, jsonFileName);
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                DataUnitContainer retVal = JsonConvert.DeserializeObject<DataUnitContainer>(jsonContent);
+                return retVal;
+            }
+            return new DataUnitContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new DataUnitContainer();
+        }
+    }
 
 }

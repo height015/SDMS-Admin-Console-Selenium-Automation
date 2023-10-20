@@ -1,14 +1,15 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
-using SuccessLogin;
-using SuccessLogin.Utils;
+using Commons;
+using Newtonsoft.Json;
 
 namespace CreateNewCategory;
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
 
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+   
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
     public static void Main(string[] args)
@@ -91,7 +92,7 @@ public class Program
             Utils.Sleep(2000);
             var catSec = new Category(driver);
             JsonFileReader jsonFileReader = new();
-            var retVal = jsonFileReader.ReadJsonFileForEnterNewDataCategory();
+            var retVal = ReadJsonFileForEnterNewDataCategory();
             catSec.EnterDataCategory(retVal.DataCategory.Name, retVal.DataCategory.Title);
             Utils.Sleep(3000);
             catSec.ClickSubmit();
@@ -105,5 +106,29 @@ public class Program
             return false;
         }
     }
+    #endregion
+
+    #region Utility
+    public static DataCategoryContainer ReadJsonFileForEnterNewDataCategory()
+    {
+        try
+        {
+              string jsonFileName = "Category.json";
+              string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileName);
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<DataCategoryContainer>(jsonContent);
+                return retVal;
+            }
+            return new DataCategoryContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new DataCategoryContainer();
+        }
+    }
+
     #endregion
 }

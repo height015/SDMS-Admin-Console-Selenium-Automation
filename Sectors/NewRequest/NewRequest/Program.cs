@@ -2,14 +2,15 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewSectorRequest;
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
     public static void Main(string[] args)
@@ -120,16 +121,13 @@ public class Program
                     btn = driver.FindElement(By.LinkText("Authorize"));
                     break;
             }
-
             if (btn != null)
             {
                 btn.Click();
             }
             Utils.Sleep(2000);
-
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
             wait.Until(ExpectedConditions.ElementIsVisible(By.ClassName("table")));
-
             var table = newReqObj.table;
             var rowCount = 0;
             if (table != null)
@@ -151,7 +149,6 @@ public class Program
             Utils.Sleep(3000);
             return rowCount.ToString();
         }
-
         catch (Exception ex)
         {
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
@@ -185,7 +182,7 @@ public class Program
             JsonFileReader jsonFileReader = new();
             var loginVal = jsonFileReader.ReadJsonFileSelectCheckBoxes();
             var newReqObj = new NewRequestObj(driver);
-            var RequestInforVal = jsonFileReader.ReadJsonFileForSelectCheckBoxesProcessNewRequest();
+            var RequestInforVal = ReadJsonFileForSelectCheckBoxesProcessNewRequest();
             Utils.Sleep(3000);
             IWebElement overlappingDiv = driver.FindElement(By.CssSelector(".col-7.text-right"));
             ((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].style.display='none';", overlappingDiv);
@@ -216,4 +213,30 @@ public class Program
 
     #endregion
 
+
+    #region Utility
+    public static Request ReadJsonFileForSelectCheckBoxesProcessNewRequest()
+    {
+        try
+        {
+            string jsonFileNamex = "Sector.json";
+            string jsonFilePathx = Path.Combine(desktopPath,
+                "SeleniumTest", jsonFileNamex);
+
+            if (File.Exists(jsonFilePathx))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePathx);
+                var retVal = JsonConvert.DeserializeObject<Request>(jsonContent);
+                return retVal;
+            }
+            return new Request();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new Request();
+        }
+    }
+
+    #endregion
 }

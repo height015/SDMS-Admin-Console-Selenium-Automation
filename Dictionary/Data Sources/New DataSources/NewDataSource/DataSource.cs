@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using SuccessLogin;
+using Commons;
 
 namespace NewDataSource;
 
@@ -12,7 +12,6 @@ public class DataSources
         _webDriver = webDriver;
 
     }
-
     public IWebElement txtName => _webDriver.FindElement(By.Id("Name"));
     public IWebElement txtShort => _webDriver.FindElement(By.Id("ShortName"));
     public IWebElement btnSubmit => _webDriver.FindElement(By.XPath("//input[@type='submit']"));

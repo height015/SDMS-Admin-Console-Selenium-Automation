@@ -1,5 +1,4 @@
-﻿
-public enum RequestType
+﻿public enum RequestType
 {
     AuthorizationRequest = 1,
     UnAuthorization = 2,

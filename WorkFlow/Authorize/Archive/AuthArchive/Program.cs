@@ -3,7 +3,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using ReviewAuthorization;
 using SuccessLogin;
-using SuccessLogin.Utils;
+using Commons;
 
 
 namespace AuthArchive;

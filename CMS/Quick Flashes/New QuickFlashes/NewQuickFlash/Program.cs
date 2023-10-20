@@ -3,15 +3,17 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewQuickFlash;
 
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
+
+
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
@@ -95,8 +97,6 @@ public class Program
             Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
         }
     }
-
-
     #region Quick Flashes
     public static void ClickQuickFlashCard(IWebDriver driver)
     {
@@ -131,7 +131,7 @@ public class Program
         {
             var Fcontent = new QuickFlashes(driver);
             JsonFileReader jsonFileReader = new();
-            var retVal = jsonFileReader.ReadJsonCMSQFlash();
+            var retVal = ReadJsonCMSQFlash();
             Fcontent.dropDownSector.SelectDropDownByIndex(retVal.QFlashDataSector.SectorIndex);
             Utils.Sleep(1000);
             Fcontent.dropDownCategory.SelectDropDownByIndex(retVal.QFlashDataSector.CategoryIndex);
@@ -157,7 +157,6 @@ public class Program
                     }
                 }
             }
-
             Utils.Sleep(3000);
             Fcontent.ClickContinue();
         }
@@ -172,7 +171,7 @@ public class Program
         {
             var Fcontent = new QuickFlashes(driver);
             JsonFileReader jsonFileReader = new();
-            var retVal = jsonFileReader.ReadJsonCMSQFlash();
+            var retVal = ReadJsonCMSQFlash();
             var perodTypeValz = Fcontent.readonlyInput;
             var dataVal = perodTypeValz.GetAttribute("data-value");
             var perodTypeVal = perodTypeValz.GetAttribute("value");
@@ -217,7 +216,6 @@ public class Program
                 default:
                     break;
             }
-
             Utils.Sleep(4000);
             Fcontent.btnContinueSelection.Click();
             Utils.Sleep(3000);
@@ -240,7 +238,7 @@ public class Program
         {
             var Fcontent = new QuickFlashes(driver);
             JsonFileReader jsonFileReader = new();
-            var retVal = jsonFileReader.ReadJsonCMSQFlash();
+            var retVal = ReadJsonCMSQFlash();
             var name = retVal.QFlashDataSector?.Name;
             var title = retVal.QFlashDataSector?.Title;
             var arrType = retVal.QFlashDataSector?.ArrowType;
@@ -268,4 +266,31 @@ public class Program
     }
     #endregion
 
+
+
+    #region Utility
+    private static QFlashDataSectorContainer ReadJsonCMSQFlash()
+    {
+        try
+        {
+            string jsonFileName = "QFlashData.json";
+            string jsonFilePath = Path.Combine(desktopPath,
+                "SeleniumTest", jsonFileName);
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                QFlashDataSectorContainer retVal = JsonConvert.DeserializeObject<QFlashDataSectorContainer>(jsonContent);
+                return retVal;
+            }
+            return new QFlashDataSectorContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new QFlashDataSectorContainer();
+        }
+
+    }
+
+    #endregion
 }

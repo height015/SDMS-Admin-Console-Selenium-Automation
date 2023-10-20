@@ -2,7 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using ReviewAuthorization;
 using SuccessLogin;
-using SuccessLogin.Utils;
+using Commons;
 
 namespace AuthArchive;
 public class Program

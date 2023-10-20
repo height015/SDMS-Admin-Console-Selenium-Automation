@@ -1,14 +1,17 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace NewDataSource;
 
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
+
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+   
 
     public static void Main(string[] args)
     {
@@ -76,8 +79,7 @@ public class Program
     {
         try
         {
-            JsonFileReader jsonFileReader = new();
-            var freqVal = jsonFileReader.ReadJsonFileDataSource();
+            var freqVal = ReadJsonFileDataSource();
             var createSec = new DataSources(driver);
             Utils.Sleep(5000);
             createSec.NewDatadataSourceEntry(freqVal.DataSource.Name, freqVal.DataSource.ShortName);
@@ -96,4 +98,29 @@ public class Program
     }
     #endregion
 
+
+
+    #region Utility
+    public static DataSourceContainer ReadJsonFileDataSource()
+    {
+        try
+        {
+        string jsonFileName = "DataSource.json";
+        string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileName);
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                DataSourceContainer retVal = JsonConvert.DeserializeObject<DataSourceContainer>(jsonContent);
+                return retVal;
+            }
+            return new DataSourceContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new DataSourceContainer();
+        }
+    }
+
+    #endregion
 }

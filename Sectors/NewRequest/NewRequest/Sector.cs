@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using SuccessLogin;
+using Commons;
 
 namespace NewSectorRequest;
 public class Sector

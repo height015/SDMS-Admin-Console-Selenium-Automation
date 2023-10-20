@@ -2,7 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using SuccessLogin;
+using Commons;
 
 namespace AuthPublication;
 
@@ -24,9 +24,9 @@ public class Program
 
                 ClickWorkFlow(driver);
                 ClickApprovalPublish(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 ClickIndicatorPopUp(driver);
-                Wait(3000);
+                Utils.Sleep(3000);
                 ClickClose(driver);
             }
         }
@@ -78,7 +78,7 @@ public class Program
         try
         {
             var auth = new AuthPublishObj(driver);
-            Wait(2000);
+            Utils.Sleep(2000);
             JsonFileReader jsonFileReader = new();
 
             var retVal = jsonFileReader.ReadJsonFileWorkFlowSelection();
@@ -99,11 +99,11 @@ public class Program
                     IWebElement desiredRow = rows[btnRow - 1];
                     IWebElement actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
                     actionsButton.Click();
-                    Wait(2000);
+                    Utils.Sleep(2000);
 
                     IWebElement RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Approve Item']"));
                     RevBoxPopUp.Click();
-                    Wait(3000);
+                    Utils.Sleep(3000);
 
                     var retCom = jsonFileReader.ReadJsonFileWorkFlowReview();
                     auth.EnterRevComment(retCom.ReviewSelection.Comment);
@@ -116,9 +116,9 @@ public class Program
                         auth.rdBtnDecline.Click();
                     }
 
-                    Wait(2000);
+                    Utils.Sleep(2000);
                     auth.ClickSubmit();
-                    Wait(3000);
+                    Utils.Sleep(3000);
                     auth.ClickOk();
                 }
             }
@@ -129,9 +129,4 @@ public class Program
         }
     }
     #endregion
-
-    private static void Wait(int time)
-    {
-        Thread.Sleep(time);
-    }
 }

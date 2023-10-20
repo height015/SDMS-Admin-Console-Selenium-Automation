@@ -1,8 +1,9 @@
 ﻿using OpenQA.Selenium;
 using SuccessLogin;
+using Commons;
+
 
 namespace NewQuickFlash;
-
 public class QuickFlashes
 {
     private readonly IWebDriver _webDriver;
@@ -25,7 +26,7 @@ public class QuickFlashes
     public IWebElement dropDwonArrDir => _webDriver.FindElement(By.Id("ArrowDirection"));
     public IWebElement txtValue => _webDriver.FindElement(By.Id("Value"));
     public IWebElement txtExplanation => _webDriver.FindElement(By.Id("Explanation"));
-    //   public IWebElement txtBoxSeries => _webDriver.FindElement(By.Id("SeriesTitle"));
+    //public IWebElement txtBoxSeries => _webDriver.FindElement(By.Id("SeriesTitle"));
 
     //public IWebElement dropDwnSeriesType => _webDriver.FindElement(By.Id("SeriesType"));
     //public IWebElement dropDwnContentSpot => _webDriver.FindElement(By.Id("ContentSpot"));

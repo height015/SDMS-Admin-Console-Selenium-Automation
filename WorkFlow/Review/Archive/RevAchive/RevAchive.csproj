@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Login\SuccessLogin\SuccessLogin\SuccessLogin.csproj" />
+    <ProjectReference Include="..\..\..\..\Shared\Commons\Commons.csproj" />
   </ItemGroup>
 
 </Project>

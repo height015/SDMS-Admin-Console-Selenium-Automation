@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-using SuccessLogin;
+using Commons;
 
 namespace NewIndicator;
 
@@ -37,7 +37,6 @@ public class Indicator
 
     public IWebElement txtTitle => _webDriver.FindElement(By.Id("txtTitle"));
     public IWebElement txtReason => _webDriver.FindElement(By.Id("txtReason"));
-
     public IWebElement chkBtnDisplayInChart => _webDriver.FindElement(By.Id("ChkGraphTitle"));
     public IWebElement txtDisplayInChart => _webDriver.FindElement(By.Id("GraphTitle"));
     public IWebElement btnUpdateModify => _webDriver.FindElement(By.Id("btnSaveLineItem"));

@@ -1,9 +1,8 @@
 ﻿using OpenQA.Selenium;
-using SuccessLogin;
+using Commons;
 
 
 namespace NewRequest;
-
 public class NewRequest
 {
     private readonly IWebDriver _webDriver;

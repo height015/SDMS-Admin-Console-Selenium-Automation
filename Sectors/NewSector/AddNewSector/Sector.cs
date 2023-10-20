@@ -1,5 +1,5 @@
 ﻿using OpenQA.Selenium;
-
+using Commons;
 namespace AddNewSector;
 
 public class Sector

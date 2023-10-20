@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
 using SuccessLogin;
+using Commons;
+
 namespace NewDataEntity;
 
 public class NewRequest

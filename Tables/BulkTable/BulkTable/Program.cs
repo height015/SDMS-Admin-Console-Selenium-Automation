@@ -1,14 +1,15 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
-using SuccessLogin;
-using SuccessLogin.Utils;
-
+using Commons;
+using Newtonsoft.Json;
 
 namespace BulkTable;
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
+
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
@@ -71,10 +72,10 @@ public class Program
             JsonFileReader jsonFileReader = new();
             var retVal = jsonFileReader.ReadJsonFileForTableDataSector();
             driver.WaitForElementToBeClickable(table.dropDownCascadeSecor, 10);
-            table.dropDownCascadeSecor.SelectDropDownByIndex(retVal.TableDataSelector.OptionToSelect);
+            table.dropDownCascadeSecor.SelectDropDownByIndex(retVal.TableDataSelector.DataSectorIndexToSelect);
             Utils.Sleep(2000);
             driver.WaitForElementToBeClickable(table.dropDownCat, 10);
-            table.dropDownCat.SelectDropDownByIndex(1);
+            table.dropDownCat.SelectDropDownByIndex(retVal.TableDataSelector.DataCategoryIndexToSelect);
             table.ClickContinue();
             Utils.Sleep(3000);
         }
@@ -101,10 +102,9 @@ public class Program
         try
         {
             var table = new Tables(driver);
-            JsonFileReader jsonFileReader = new();
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+           
             string fileName = "Table_Template.xlsx";
-            string filePath = Path.Combine(desktopPath, fileName);
+            string filePath = Path.Combine(desktopPath, "SeleniumTest", fileName);
             Utils.Sleep(3000);
             table.btnBrowseFile.SendKeys(filePath);
             table.btnUpload.Click();
@@ -112,7 +112,7 @@ public class Program
             driver.WaitForElementToBeClickable(table.btnClickOk, 10);
             table.btnClickOk.Click();
             Utils.Sleep(3000);
-            var retVal = jsonFileReader.ReadJsonBulkTabe();
+            var retVal = ReadJsonBulkTabe();
             bool applyAll = retVal.BulkTableNewDataCon.ApplyAll;
             var bulkTableNewDataList = retVal.BulkTableNewDataCon.BulkTableNewData;
             var tableRes = table.table;
@@ -165,4 +165,30 @@ public class Program
         }
     }
     #endregion
+
+
+    public static BulkTableNewDataContainer ReadJsonBulkTabe()
+    {
+        try
+        {
+            string jsonFileName = "Tables.json";
+            string jsonFilePath = Path.Combine(desktopPath,
+                "SeleniumTest", jsonFileName);
+
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                var retVal = JsonConvert.DeserializeObject<BulkTableNewDataContainer>(jsonContent);
+                return retVal;
+            }
+            return new BulkTableNewDataContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new BulkTableNewDataContainer();
+        }
+
+    }
+
 }

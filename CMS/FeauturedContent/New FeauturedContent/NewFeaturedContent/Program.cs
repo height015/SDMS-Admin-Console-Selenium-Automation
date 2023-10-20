@@ -4,12 +4,17 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 using SuccessLogin;
-using SuccessLogin.Utils;
+using Commons;
+using Newtonsoft.Json;
+
 namespace NewFeaturedContent;
 
 public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
+
+    public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+   
 
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
@@ -18,12 +23,8 @@ public class Program
         using (var driver = new ChromeDriver())
         {
             var loginObj = new SuccessLogin.Program();
-
             var data = new Program();
-
             bool login = loginObj.LoginSuccess(driver);
-
-
             if (login)
             {
                 //FeaturedContent
@@ -138,7 +139,7 @@ public class Program
         {
             var Fcontent = new FeaturedContents(driver);
             var jsonFileReader = new JsonFileReader();
-            var retVal = jsonFileReader.ReadJsonCMSFeaturedContent();
+            var retVal = ReadJsonCMSFeaturedContent();
             Fcontent.dropDownSector.SelectDropDownByIndex(retVal.FeaturedContentDataSector.SectorIndex);
             Utils.Sleep(1000);
             Fcontent.dropDownCategory.SelectDropDownByIndex(retVal.FeaturedContentDataSector.CategoryIndex);
@@ -181,7 +182,7 @@ public class Program
         {
             var Fcontent = new FeaturedContents(driver);
             var jsonFileReader = new JsonFileReader();
-            var retVal = jsonFileReader.ReadJsonCMSFeaturedContent();
+            var retVal = ReadJsonCMSFeaturedContent();
             var perodTypeValz = Fcontent.readonlyInput;
             var dataVal = perodTypeValz.GetAttribute("data-value");
             var perodTypeVal = perodTypeValz.GetAttribute("value");
@@ -249,7 +250,7 @@ public class Program
         {
             var Fcontent = new FeaturedContents(driver);
             var jsonFileReader = new JsonFileReader();
-            var retVal = jsonFileReader.ReadJsonCMSFeaturedContent();
+            var retVal = ReadJsonCMSFeaturedContent();
             var name = retVal.FeaturedContentDataSector?.Name;
             var title = retVal.FeaturedContentDataSector?.Title;
             var titleSeries = retVal.FeaturedContentDataSector?.SeriesTitle;
@@ -277,5 +278,34 @@ public class Program
         }
 
     }
+    #endregion
+
+
+
+    #region Utility
+    public static FeaturedContentDataSectorContainer ReadJsonCMSFeaturedContent()
+    {
+        try
+        {
+              string jsonFileName = "FContent.json";
+              string jsonFilePath = Path.Combine(desktopPath,
+                  "SeleniumTest", jsonFileName);
+
+            if (File.Exists(jsonFilePath))
+            {
+                var jsonContent = File.ReadAllText(jsonFilePath);
+                FeaturedContentDataSectorContainer retVal = JsonConvert.DeserializeObject<FeaturedContentDataSectorContainer>(jsonContent);
+                return retVal;
+            }
+            return new FeaturedContentDataSectorContainer();
+        }
+        catch (Exception ex)
+        {
+            var message = ex.Message;
+            return new FeaturedContentDataSectorContainer();
+        }
+
+    }
+
     #endregion
 }
