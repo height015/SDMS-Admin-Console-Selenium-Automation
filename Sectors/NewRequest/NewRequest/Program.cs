@@ -10,6 +10,8 @@ public class Program
 {
     private static readonly string _URL = "http://197.255.51.104:9035";
     public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+    public static int reqType = -1;
+
 
     //http://197.255.51.104:9008
     //http://197.255.51.104:9035
@@ -20,6 +22,7 @@ public class Program
             var loginObj = new SuccessLogin.Program();
             var data = new Program();
             bool login = loginObj.LoginSuccess(driver);
+
             if (login)
             {
                 #region Sector
@@ -49,7 +52,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -65,7 +68,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -80,7 +83,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -91,7 +94,7 @@ public class Program
             JsonFileReader lx = new();
             var newReqObj = new NewRequestObj(driver);
             var retVals = lx.ReadJsonFileSelectCheckBoxes();
-            var reqType = retVals.CheckBoxNumbers.RequestType;
+            reqType = retVals.CheckBoxNumbers.RequestType;
             Utils.Sleep(3000);
             IWebElement btn = null;
             switch (reqType)
@@ -151,7 +154,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return string.Empty;
         }
     }
@@ -171,7 +174,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return string.Empty;
         }
     }
@@ -202,11 +205,13 @@ public class Program
             newReqObj.ClickSubmit();
             Utils.Sleep(6000);
             newReqObj.ClickOk();
+            string enumString = Enum.GetName(typeof(RequestType), reqType);
+            Utils.LogSuccess(enumString, "Sector");
             return true;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -233,7 +238,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new Request();
         }
     }

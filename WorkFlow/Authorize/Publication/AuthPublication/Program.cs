@@ -21,7 +21,6 @@ public class Program
 
             if (login)
             {
-
                 ClickWorkFlow(driver);
                 ClickApprovalPublish(driver);
                 Utils.Sleep(3000);
@@ -41,7 +40,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
 
@@ -54,7 +53,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
 
@@ -70,7 +69,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void ClickIndicatorPopUp(IWebDriver driver)
@@ -80,11 +79,8 @@ public class Program
             var auth = new AuthPublishObj(driver);
             Utils.Sleep(2000);
             JsonFileReader jsonFileReader = new();
-
             var retVal = jsonFileReader.ReadJsonFileWorkFlowSelection();
-
             var dropdownCat = new SelectElement(auth.dropDownCat);
-
             dropdownCat.SelectByIndex(retVal.WorkFlowSelection.CategoryIndex);
             var sourceType = new SelectElement(auth.dropDownType);
             sourceType.SelectByIndex(retVal.WorkFlowSelection.SourceTypeIndex);
@@ -100,11 +96,9 @@ public class Program
                     IWebElement actionsButton = desiredRow.FindElement(By.CssSelector("button[data-toggle='dropdown']"));
                     actionsButton.Click();
                     Utils.Sleep(2000);
-
                     IWebElement RevBoxPopUp = desiredRow.FindElement(By.CssSelector("a[title='Approve Item']"));
                     RevBoxPopUp.Click();
                     Utils.Sleep(3000);
-
                     var retCom = jsonFileReader.ReadJsonFileWorkFlowReview();
                     auth.EnterRevComment(retCom.ReviewSelection.Comment);
                     if (retCom.ReviewSelection.Status == true)
@@ -115,17 +109,17 @@ public class Program
                     {
                         auth.rdBtnDecline.Click();
                     }
-
                     Utils.Sleep(2000);
                     auth.ClickSubmit();
                     Utils.Sleep(3000);
                     auth.ClickOk();
+                    Utils.LogSuccess($"Publication", "WorkFlow");
                 }
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     #endregion

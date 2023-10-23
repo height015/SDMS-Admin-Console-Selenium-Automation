@@ -10,6 +10,8 @@ public class Program
     public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
     public static string jsonFileNameTbl = "DataSource.json";
     public static string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileNameTbl);
+    private static int reqType = -1;
+
 
     private static readonly string _URL = "http://197.255.51.104:9035";
     public static void Main(string[] args)
@@ -41,7 +43,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
 
@@ -70,7 +72,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -81,7 +83,7 @@ public class Program
             JsonFileReader lx = new();
             var retVals = lx.ReadJsonFileSelectCheckBoxes();
             var create = new NewRequest(driver);
-            var reqType = retVals.CheckBoxNumbers.RequestType;
+            reqType = retVals.CheckBoxNumbers.RequestType;
             Utils.Sleep(3000);
             IWebElement btn;
             switch (reqType)
@@ -143,7 +145,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return string.Empty;
         }
     }
@@ -186,11 +188,13 @@ public class Program
             genericVal.ClickSave();
             Utils.Sleep(4000);
             genericVal.ClickOk();
+            string enumString = Enum.GetName(typeof(RequestType), reqType);
+            Utils.LogSuccess(enumString, "Dictionary Data-Source");
             return true;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -211,7 +215,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new IndicatorRequestDataContainer();
         }
     }

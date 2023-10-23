@@ -38,7 +38,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void ClickWorkFlow(IWebDriver driver)
@@ -50,7 +50,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     #region Approvals   
@@ -63,7 +63,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void CreateNewDataIndicatorPopUp(IWebDriver driver)
@@ -100,18 +100,19 @@ public class Program
                     else
                     {
                         auth.rdBtnDecline.Click();
-
                     }
                     Utils.Sleep(2000);
                     auth.ClickSubmit();
                     Utils.Sleep(3000);
                     auth.ClickOk();
+                    Utils.LogSuccess($"Authorization", "WorkFlow -> Review");
+
                 }
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     #endregion

@@ -44,7 +44,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -60,7 +60,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void TableCatalogueSelectorPopUp(IWebDriver driver)
@@ -79,7 +79,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void TableCreateNewPopUp(IWebDriver driver)
@@ -186,10 +186,12 @@ public class Program
             table.ClickSubmit();
             Utils.Sleep(4000);
             table.ClickOk();
+            Utils.LogSuccess($"Create", "Tables");
+
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     #endregion
@@ -210,7 +212,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new TableNewDataContainer();
         }
     }
@@ -229,7 +231,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new TableFrequencyContainer();
         }
     }
@@ -247,7 +249,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new TableUnitContainer();
         }
     }
@@ -266,7 +268,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new DataTableSettingContainer();
         }
     }
@@ -284,7 +286,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new DataTableTxtValContainer();
         }
     }

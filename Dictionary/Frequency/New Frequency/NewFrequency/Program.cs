@@ -42,7 +42,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static bool ClickNewRequest(IWebDriver driver)
@@ -56,7 +56,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -71,7 +71,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static bool ClickFrequencyNewRequest(IWebDriver driver)
@@ -85,7 +85,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -104,11 +104,12 @@ public class Program
             createSec.ClickSubmit();
             Utils.Sleep(3000);
             createSec.ClickOk();
+            Utils.LogSuccess($"Create {freqVal.DataFrequency.Name}", "Dictionary Frequency");
             return true;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -134,8 +135,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
-
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new DataFrequencyContainer();
         }
     }

@@ -43,7 +43,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
 
@@ -57,7 +57,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void ClickCategoryCard(IWebDriver driver)
@@ -79,7 +79,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static bool ClickNewDataCategoryButton(IWebDriver driver)
@@ -98,11 +98,13 @@ public class Program
             catSec.ClickSubmit();
             Utils.Sleep(5000);
             catSec.ClickOk();
+            Utils.LogSuccess($"Create {retVal.DataCategory.Name}", "Category");
+
             return true;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -114,7 +116,8 @@ public class Program
         try
         {
               string jsonFileName = "Category.json";
-              string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileName);
+              string jsonFilePath = Path.Combine(desktopPath, 
+                  "SeleniumTest", jsonFileName);
             if (File.Exists(jsonFilePath))
             {
                 var jsonContent = File.ReadAllText(jsonFilePath);
@@ -125,7 +128,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new DataCategoryContainer();
         }
     }

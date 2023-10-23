@@ -5,6 +5,7 @@ using SeleniumExtras.WaitHelpers;
 using Commons;
 using Newtonsoft.Json;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Drawing.Drawing2D;
 
 namespace AddNewSector;
 public class Program
@@ -47,7 +48,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -63,7 +64,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -84,11 +85,12 @@ public class Program
             wait.Until(ExpectedConditions.ElementIsVisible(By
                 .CssSelector("button.confirm[style*='display: inline-block;'][style*='background-color: rgb(140, 212, 245);']")));
             createSec.ClickOk();
+            Utils.LogSuccess($"Create {secVal.SectorField.Title}", "Sector");
             return teaxVal;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.StackTrace} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return string.Empty;
         }
     }
@@ -112,7 +114,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new DataSector();
         }
     }

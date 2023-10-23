@@ -47,7 +47,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -60,7 +60,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
 
@@ -74,7 +74,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void IndicatorCataloguePopUp(IWebDriver driver)
@@ -101,7 +101,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void ClickIndicatorBulk(IWebDriver driver)
@@ -114,7 +114,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void IndicatorUploadBulkFile(IWebDriver driver)
@@ -158,6 +158,7 @@ public class Program
                         }
                         Utils.Sleep(2000);
                         indi.ClickOk();
+
                     }
                 }
             }
@@ -169,10 +170,12 @@ public class Program
                 indi.boxSel[indexToSelect].Click();
             }
             Utils.Sleep(3000);
+            Utils.LogSuccess($"Bulk Indicator Creation", "Indicator");
+
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
         finally
         {
@@ -200,7 +203,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new BulkIndicatorNewDataContainer();
         }
 

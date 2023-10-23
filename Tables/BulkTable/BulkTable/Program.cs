@@ -45,7 +45,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -81,7 +81,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void ClickTableBulk(IWebDriver driver)
@@ -94,7 +94,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void TableUploadBulkFile(IWebDriver driver)
@@ -157,11 +157,13 @@ public class Program
             Utils.Sleep(3000);
             driver.WaitForElementToBeClickable(table.btnClickOk, 10);
             table.btnClickOk.Click();
+            Utils.LogSuccess($"Bulk Table Creation", "Tables");
+
             Utils.Sleep(3000);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     #endregion
@@ -185,7 +187,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new BulkTableNewDataContainer();
         }
 

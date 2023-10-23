@@ -12,6 +12,8 @@ public class Program
     public const string jsonFileName = "Tables.json";
     public static string jsonFilePath = Path.Combine(desktopPath,
         "SeleniumTest", jsonFileName);
+    public static int reqType = -1;
+
 
     private static readonly string _URL = "http://197.255.51.104:9035";
 
@@ -47,7 +49,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -63,7 +65,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void TableCatalogueSelectorPopUp(IWebDriver driver)
@@ -84,7 +86,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static string ClickRequestType(IWebDriver driver)
@@ -94,7 +96,7 @@ public class Program
             JsonFileReader lx = new();
             var createSec = new NewRequests(driver);
             var retVals = lx.ReadJsonFileSelectCheckBoxes();
-            var reqType = retVals.CheckBoxNumbers.RequestType;
+            reqType = retVals.CheckBoxNumbers.RequestType;
             Utils.Sleep(3000);
             IWebElement btn = null;
             switch (reqType)
@@ -153,7 +155,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return string.Empty;
         }
     }
@@ -178,11 +180,13 @@ public class Program
             table.ClickSave();
             Utils.Sleep(4000);
             table.ClickOk();
+            string enumString = Enum.GetName(typeof(RequestType), reqType);
+            Utils.LogSuccess(enumString, "Tables");
             return true;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -203,7 +207,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new TableRequestDataContainer();
         }
     }

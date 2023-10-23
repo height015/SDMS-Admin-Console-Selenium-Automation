@@ -11,6 +11,8 @@ public class Program
     public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
     public static string jsonFileNameTbl = "Indicator.json";
     public static string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileNameTbl);
+    private static int reqType = -1;
+
 
     private static readonly string _URL = "http://197.255.51.104:9035";
     //http://197.255.51.104:9008
@@ -53,7 +55,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -68,7 +70,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -79,7 +81,7 @@ public class Program
             JsonFileReader lx = new();
             var createSec = new NewRequest(driver);
             var retVals = lx.ReadJsonFileSelectCheckBoxes();
-            var reqType = retVals.CheckBoxNumbers.RequestType;
+            reqType = retVals.CheckBoxNumbers.RequestType;
             Utils.Sleep(3000);
             IWebElement btn = null;
             switch (reqType)
@@ -143,7 +145,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return string.Empty;
         }
     }
@@ -156,7 +158,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
 
@@ -170,7 +172,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static void IndicatorCataloguePopUp(IWebDriver driver)
@@ -197,7 +199,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
 
@@ -226,12 +228,14 @@ public class Program
             indicatoor.ClickSave();
             Utils.Sleep(8000);
             indicatoor.ClickOk();
+            string enumString = Enum.GetName(typeof(RequestType), reqType);
+            Utils.LogSuccess(enumString, "Indicator");
             return true;
         }
 
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -252,7 +256,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new IndicatorRequestDataContainer();
         }
     }

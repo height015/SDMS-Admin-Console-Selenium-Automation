@@ -126,6 +126,8 @@ public class Program
             inidi.ClickSubmit();
             Utils.Sleep(3000);
             inidi.ClickOk();
+            Utils.LogSuccess($"Create {textName}", "Indicator");
+
         }
         catch (Exception ex)
         {

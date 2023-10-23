@@ -13,6 +13,8 @@ public class Program
     public static string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
     public static string jsonFileNameTbl = "DataEntity.json";
     public static string jsonFilePath = Path.Combine(desktopPath, "SeleniumTest", jsonFileNameTbl);
+    public static int reqType = -1;
+
     public static void Main(string[] args)
     {
         using (var driver = new ChromeDriver())
@@ -44,7 +46,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
 
@@ -58,7 +60,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
         }
     }
     public static bool ClickNewRequest(IWebDriver driver)
@@ -72,7 +74,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -83,7 +85,7 @@ public class Program
             JsonFileReader lx = new();
             var retVals = lx.ReadJsonFileSelectCheckBoxes();
             var create = new NewRequest(driver);
-            var reqType = retVals.CheckBoxNumbers.RequestType;
+            reqType = retVals.CheckBoxNumbers.RequestType;
             Utils.Sleep(3000);
             IWebElement btn;
             switch (reqType)
@@ -145,7 +147,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return string.Empty;
         }
     }
@@ -188,11 +190,13 @@ public class Program
             genericVal.ClickSave();
             Utils.Sleep(8000);
             genericVal.ClickOk();
+            string enumString = Enum.GetName(typeof(RequestType), reqType);
+            Utils.LogSuccess(enumString, "Dictionary Data-Entities");
             return true;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"{ex.Source} and {ex.InnerException} and {ex.Message}");
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return false;
         }
     }
@@ -213,7 +217,7 @@ public class Program
         }
         catch (Exception ex)
         {
-            var message = ex.Message;
+            Utils.LogE(ex.StackTrace, ex.Source, ex.Message);
             return new IndicatorRequestDataContainer();
         }
     }
